@@ -3,12 +3,17 @@ import Modal from "../ui/Modal";
 
 const AddTaskModal = ({ isOpen, setIsOpen }) => {
 
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
 
     const onSubmit = (data) => {
         console.log(data);
+        onCancel();
     }
 
+    const onCancel = () => {
+        reset();
+        setIsOpen(false);
+    }
 
 
     return (
@@ -60,6 +65,7 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                         id="assignedTo"
                         {...register('assignedTo')}
                     >
+                        <option value="ACM Anik">ACM Anik</option>
                         <option value="Mir Hussain">Mir Hussain</option>
                         <option value="Mezba Abedin">Mezba Abedin</option>
                         <option value="Nahid Hasan">Nahid Hasan</option>
@@ -92,7 +98,13 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                     </select>
                 </div>
                 <div className="flex gap-3 justify-end">
-                    
+                    <button
+                        onClick={() => onCancel()}
+                        type="button"
+                        className="btn btn-danger "
+                    >
+                        Cancel
+                    </button>
                     <button type="submit" className="btn btn-primary ">
                         submit
                     </button>
