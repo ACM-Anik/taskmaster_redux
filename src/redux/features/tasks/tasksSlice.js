@@ -18,6 +18,9 @@ const tasksSlice = createSlice({
                     status: 'pending', 
                     ...payload});
             }
+        },
+        removeTask: (state, payload) => {
+            state.tasks.filter((item) => item.id !== payload);
         }
     },
 });

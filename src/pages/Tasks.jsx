@@ -3,9 +3,12 @@ import MyTasks from '../components/tasks/MyTasks';
 import TaskCard from '../components/tasks/TaskCard';
 import { useState } from 'react';
 import AddTaskModal from '../components/tasks/AddTaskModal';
+import { useSelector } from 'react-redux';
 
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { tasks } = useSelector((state) => state.tasksSlice);
+  console.log(tasks);
 
   return (
     <div className="h-screen grid grid-cols-12">
@@ -21,7 +24,7 @@ const Tasks = () => {
             <button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl h-10 w-10 grid place-content-center text-secondary hover:text-white transition-all">
               <BellIcon className="h-6 w-6" />
             </button>
-            
+
             <button onClick={() => setIsOpen(!isOpen)} className="btn btn-primary">Add Task</button>
             <AddTaskModal
               isOpen={isOpen}
@@ -46,7 +49,9 @@ const Tasks = () => {
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
+              {tasks.map((item) => (
+                <TaskCard key={item.id} task={item}/>
+              ))}
             </div>
           </div>
           <div className="relative h-[800px] overflow-auto">
@@ -57,8 +62,9 @@ const Tasks = () => {
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
-              <TaskCard />
+              {tasks.map((item) => (
+                <TaskCard key={item.id} task={item} />
+              ))}
             </div>
           </div>
           <div className="relative h-[800px] overflow-auto">
@@ -69,7 +75,9 @@ const Tasks = () => {
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
+              {tasks.map((item) => (
+                <TaskCard key={item.id} task={item} />
+              ))}
             </div>
           </div>
         </div>

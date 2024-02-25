@@ -7,9 +7,9 @@
 }
 
 .btn-primary {
-  @apply bg-primary text-white;
+  @apply bg-primary text-white hover:bg-blue-800;
 }
 
 .btn-danger {
-  @apply bg-red-500 text-white;
+  @apply bg-red-500 text-white hover:bg-red-700;
 }
