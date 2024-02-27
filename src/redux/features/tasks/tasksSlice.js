@@ -41,7 +41,7 @@ const tasksSlice = createSlice({
             // console.log('payload', payload);
         },
         userTasks: (state, {payload}) => {
-            state.userSpecificTasks = state.tasks.filter(item => item.assignedTo === payload);
+            state.userSpecificTasks = state.tasks.filter((item) => item.assignedTo === payload);
         }
     },
 });

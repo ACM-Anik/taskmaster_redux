@@ -8,7 +8,7 @@ import { userTasks } from '../../redux/features/tasks/tasksSlice';
 
 
 const MyTasks = () => {
-  const { userSpecificTasks } = useSelector((state) => state.tasksSlice);
+  const { tasks, userSpecificTasks } = useSelector((state) => state.tasksSlice);
   const { name: userName } = useSelector((state) => state.usersSlice);
 
   console.log(userName);
@@ -16,7 +16,7 @@ const MyTasks = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(userTasks(userName));
-  }, [userName, dispatch]);
+  }, [userName, tasks, dispatch]);
 
   return (
     <div>
