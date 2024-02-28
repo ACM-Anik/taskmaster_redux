@@ -12,6 +12,8 @@ const MyTasks = () => {
   const { name: userName } = useSelector((state) => state.usersSlice);
 
   console.log(userName);
+  console.log(tasks);
+  console.log(userSpecificTasks);
 
   const dispatch = useDispatch();
   useEffect(() => {

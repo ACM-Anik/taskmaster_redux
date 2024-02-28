@@ -13,7 +13,7 @@ const Tasks = () => {
   const runningTasks = tasks.filter((item) => item.status === 'running');
   const doneTasks = tasks.filter((item) => item.status === 'done');
 
-  console.log(tasks);
+  // console.log(tasks);
 
   return (
     <div className="h-screen grid grid-cols-12">
