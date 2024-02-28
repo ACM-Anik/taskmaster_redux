@@ -11,19 +11,25 @@ import TaskDetailsModal from './TaskDetailsModal';
 const MyTasks = () => {
   const { tasks, userSpecificTasks } = useSelector((state) => state.tasksSlice);
   const { name: userName } = useSelector((state) => state.usersSlice);
-  const [isOpen, setIsOpen] = useState(false);
-
+  const dispatch = useDispatch();
   // console.log(userName);
   // console.log(userSpecificTasks);
-
-  const dispatch = useDispatch();
+  
+  const [isOpen, setIsOpen] = useState(false);
+  const [taskId, setTaskId] = useState(0);
+  
+  const handleModal = (id) => {
+    setTaskId(id);
+    setIsOpen(!isOpen);
+  }
+  
   useEffect(() => {
     dispatch(userTasks(userName));
   }, [userName, tasks, dispatch]);
 
   return (
     <div>
-      <TaskDetailsModal isOpen={isOpen} setIsOpen={setIsOpen}></TaskDetailsModal>
+      <TaskDetailsModal isOpen={isOpen} setIsOpen={setIsOpen} id={taskId}></TaskDetailsModal>
       <h1 className="text-xl my-3">My Tasks</h1>
       <div className=" h-[750px] overflow-auto space-y-3">
         {userSpecificTasks.map((item) => (
@@ -33,7 +39,7 @@ const MyTasks = () => {
           >
             <h1>{item.title}</h1>
             <div className="flex gap-3">
-              <button onClick={() => setIsOpen(!isOpen)} className="grid place-content-center" title="Details">
+              <button onClick={() => handleModal(item.id)} className="grid place-content-center" title="Details">
                 <DocumentMagnifyingGlassIcon className="w-5 h-5 text-primary" />
               </button>
               <button onClick={() => dispatch(updateStatus({id: item.id, status: "done"}))} className="grid place-content-center" title="Done">
