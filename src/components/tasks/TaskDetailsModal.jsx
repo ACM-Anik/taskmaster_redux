@@ -7,8 +7,9 @@ const TaskDetailsModal = ({isOpen, setIsOpen, id}) => {
     const task = tasks.find((item) => item.id === id);
 
     return (
-        <Modal isOpen={isOpen} setIsOpen={setIsOpen} title={id?.title}>
-            detail: {task?.description}
+        <Modal isOpen={isOpen} setIsOpen={setIsOpen} task={task}>
+            <h3 className="font-bold">{task?.title}</h3>
+            {task?.description}
         </Modal>
     );
 };
