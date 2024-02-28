@@ -7,7 +7,6 @@ const TaskCard = ({ task }) => {
   const dispatch = useDispatch();
 
   let updatedStatus;
-
   if (task.status === 'pending') {
     updatedStatus = 'running';
   }else if (task.status === 'running') {
@@ -16,7 +15,7 @@ const TaskCard = ({ task }) => {
     updatedStatus = 'archive';
   }
   
-
+  
   return (
     <div className="bg-secondary/10 rounded-md p-5">
       <h1
