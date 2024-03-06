@@ -18,15 +18,15 @@ const MyTasks = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [taskId, setTaskId] = useState(0);
   
+  useEffect(() => {
+    dispatch(userTasks(userName));
+  }, [userName, tasks, dispatch]);
+  
   const handleModal = (id) => {
     setTaskId(id);
     setIsOpen(!isOpen);
   }
   
-  useEffect(() => {
-    dispatch(userTasks(userName));
-  }, [userName, tasks, dispatch]);
-
   return (
     <div>
       <TaskDetailsModal isOpen={isOpen} setIsOpen={setIsOpen} id={taskId}></TaskDetailsModal>
