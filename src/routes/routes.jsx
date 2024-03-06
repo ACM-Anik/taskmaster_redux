@@ -7,11 +7,14 @@ import Settings from '../pages/Settings';
 import Profile from '../pages/Profile';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
+import PrivateRoute from '../components/layouts/PrivateRoute';
 
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <PrivateRoute>
+      <App />
+    </PrivateRoute>,
     children: [
       {
         index: true,
