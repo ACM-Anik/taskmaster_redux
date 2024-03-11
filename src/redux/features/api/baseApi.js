@@ -10,4 +10,6 @@ const baseApi = createApi({
     }),
 });
 
+export const {useGetTasksQuery} =  baseApi;
+
 export default baseApi;
