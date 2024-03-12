@@ -8,6 +8,19 @@ const TaskCard = ({ task }) => {
   console.log('data', data);
   console.log('error', error);
 
+
+  const handleUpdate = (id, updatedStatus) => {
+    const data = {
+      status: updatedStatus,
+    };
+    const options = {
+      id: id,
+      data: data,
+    };
+
+    updateTask(options);
+  };
+
   let updatedStatus;
   if (task.status === 'pending') {
     updatedStatus = 'running';
@@ -34,10 +47,11 @@ const TaskCard = ({ task }) => {
         <div className="flex gap-3">
           <button 
           // onClick={() => dispatch(removeTask(task.id))} 
+          onClick={() => console.log('Remove')}
           title="Delete">
             <TrashIcon className="h-5 w-5 text-red-500" />
           </button>
-          <button onClick={() => updateTask({ id: task._id, data:{status: updatedStatus} })} title="In progress">
+          <button onClick={() => handleUpdate(task._id, updateStatus)} title="In progress">
             <ArrowRightIcon className="h-5 w-5 text-primary" />
           </button>
         </div>
