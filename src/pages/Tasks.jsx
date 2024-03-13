@@ -8,15 +8,18 @@ import { useGetTasksQuery } from '../redux/features/api/baseApi';
 
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
+  /** We can Refresh the ui by this method:--
   const {data: tasks} = useGetTasksQuery(undefined, {
     pollingInterval: 30000, //polling after 30sec (refresh)
     refetchOnMountOrArgChange: true, //Update after mounting and unmounting. (Changing interface)
   });
+  // OR, setting tagProviders at the baseApi queries
+  **/
+  const {data: tasks} = useGetTasksQuery();
 
   const pendingTasks = tasks?.filter((item) => item.status === 'pending');
   const runningTasks = tasks?.filter((item) => item.status === 'running');
   const doneTasks = tasks?.filter((item) => item.status === 'done');
-
 
   return (
     <>
