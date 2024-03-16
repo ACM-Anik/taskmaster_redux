@@ -28,3 +28,4 @@ const taskApi = baseApi.injectEndpoints({
 });
 
 export const {useAddTaskMutation, useGetTasksQuery, useUpdateTaskMutation} = taskApi; 
+console.log(useGetTasksQuery);

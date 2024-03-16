@@ -5,7 +5,7 @@ import baseApi from './features/api/baseApi';
 
 const store = configureStore({
   reducer: {
-    [baseApi.reducer]: baseApi.reducerPath,
+    [baseApi.reducerPath]: baseApi.reducer,
     tasksSlice: tasksSlice,
     usersSlice: usersSlice,
   },

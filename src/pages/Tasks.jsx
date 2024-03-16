@@ -16,6 +16,7 @@ const Tasks = () => {
   // OR, setting tagProviders at the baseApi queries
   **/
   const {data: tasks} = useGetTasksQuery();
+  console.log(tasks);
 
   const pendingTasks = tasks?.filter((item) => item.status === 'pending');
   const runningTasks = tasks?.filter((item) => item.status === 'running');
