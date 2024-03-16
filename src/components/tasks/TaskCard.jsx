@@ -5,6 +5,7 @@ import { useUpdateTaskMutation } from '../../redux/features/tasks/taskApi';
 
 
 const TaskCard = ({ task }) => {
+
   const [updateTask, {data, error}] = useUpdateTaskMutation();
   console.log('data', data);
   console.log('error', error);
@@ -22,12 +23,12 @@ const TaskCard = ({ task }) => {
   };
 
   let updatedStatus;
-  if (task.status === 'pending') {
-    updatedStatus = 'running';
-  }else if (task.status === 'running') {
-    updatedStatus = 'done';
+  if (task.status === "pending") {
+    updatedStatus = "running";
+  }else if (task.status === "running") {
+    updatedStatus = "done";
   } else {
-    updatedStatus = 'archive';
+    updatedStatus = "archive";
   }
   
   
@@ -51,7 +52,7 @@ const TaskCard = ({ task }) => {
           title="Delete">
             <TrashIcon className="h-5 w-5 text-red-500" />
           </button>
-          <button onClick={() => handleUpdate(task._id, updateStatus)} title="In progress">
+          <button onClick={() => handleUpdate(task._id, updatedStatus)} title="In progress">
             <ArrowRightIcon className="h-5 w-5 text-primary" />
           </button>
         </div>
