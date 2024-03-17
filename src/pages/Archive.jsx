@@ -16,7 +16,7 @@ const Archive = () => {
       </div>
       <div className="grid grid-cols-4 gap-5">
         {archiveTasks?.map((item) => (
-          <TaskCard key={item.id} task={item} />
+          <TaskCard key={item._id} task={item} />
         ))}
       </div>
     </div>
