@@ -1,14 +1,19 @@
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { useUpdateTaskMutation } from '../../redux/features/tasks/taskApi';
+import { useRemoveTaskMutation, useUpdateTaskMutation } from '../../redux/features/tasks/taskApi';
 
 
 
 
 const TaskCard = ({ task }) => {
 
-  const [updateTask, {data, error}] = useUpdateTaskMutation();
-  console.log('data', data);
-  console.log('error', error);
+  const [updateTask, {data, updateError}] = useUpdateTaskMutation();
+
+  const [removeTask, {removeData, removeError}] = useRemoveTaskMutation();
+
+  // console.log('data', data);
+  // console.log('updateError', updateError);
+  console.log('removeData', removeData);
+  console.log('removeError', removeError);
 
   const handleUpdate = (id, updatedStatus) => {
     const data = {
@@ -20,6 +25,18 @@ const TaskCard = ({ task }) => {
     };
 
     updateTask(options);
+  };
+
+  const handleRemove = (id) => {
+    // const data = {
+    //   status: updatedStatus,
+    // };
+    // const options = {
+    //   id: id,
+    //   data: data,
+    // };
+
+    removeTask(id);
   };
 
   let updatedStatus;
@@ -48,7 +65,7 @@ const TaskCard = ({ task }) => {
         <div className="flex gap-3">
           <button 
           // onClick={() => dispatch(removeTask(task.id))} 
-          onClick={() => console.log('Remove')}
+          onClick={() => handleRemove(task._id)}
           title="Delete">
             <TrashIcon className="h-5 w-5 text-red-500" />
           </button>

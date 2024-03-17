@@ -3,17 +3,8 @@ import baseApi from "../api/baseApi";
 const taskApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getTasks: builder.query({
-            query: () =>'/tasks',
+            query: () => '/tasks',
             providesTags: ["Tasks"], //To refresh 
-        }),
-
-        updateTask: builder.mutation({
-            query: ({id, data}) => ({
-                url: `/tasks/${id}`,
-                method: "PATCH",
-                body: data,
-            }),
-            invalidatesTags: ["Tasks"], //To refresh
         }),
 
         addTask: builder.mutation({
@@ -24,7 +15,25 @@ const taskApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["Tasks"], //To refresh
         }),
+
+        updateTask: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `/tasks/${id}`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ["Tasks"], //To refresh
+        }),
+
+        removeTask: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `/tasks/${id}`,
+                method: "DELETE",
+                body: data,
+            }),
+            invalidatesTags: ["Tasks"], //To refresh
+        }),
     }),
 });
 
-export const {useAddTaskMutation, useGetTasksQuery, useUpdateTaskMutation} = taskApi; 
+export const { useAddTaskMutation, useGetTasksQuery, useUpdateTaskMutation, useRemoveTaskMutation } = taskApi; 
