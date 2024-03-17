@@ -7,6 +7,6 @@ const baseApi = createApi({
     endpoints: () => ({}),
 });
 
-export const {useGetTasksQuery, useUpdateStatusMutation, useAddTaskMutation} =  baseApi;
+export const {useGetTasksQuery, useUpdateStatusMutation, useAddTaskMutation, useRemoveTaskMutation} =  baseApi;
 
 export default baseApi;

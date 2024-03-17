@@ -6,12 +6,11 @@ import { useRemoveTaskMutation, useUpdateTaskMutation } from '../../redux/featur
 
 const TaskCard = ({ task }) => {
 
-  const [updateTask, {data, updateError}] = useUpdateTaskMutation();
+  const [updateTask, { data: updateData, error: updateError }] = useUpdateTaskMutation();
+  const [removeTaskMutation, { data: removeData, error: removeError }] = useRemoveTaskMutation();
 
-  const [removeTask, {removeData, removeError}] = useRemoveTaskMutation();
-
-  // console.log('data', data);
-  // console.log('updateError', updateError);
+  console.log('data', updateData);
+  console.log('updateError', updateError);
   console.log('removeData', removeData);
   console.log('removeError', removeError);
 
@@ -27,28 +26,17 @@ const TaskCard = ({ task }) => {
     updateTask(options);
   };
 
-  const handleRemove = (id) => {
-    // const data = {
-    //   status: updatedStatus,
-    // };
-    // const options = {
-    //   id: id,
-    //   data: data,
-    // };
-
-    removeTask(id);
-  };
 
   let updatedStatus;
   if (task.status === "pending") {
     updatedStatus = "running";
-  }else if (task.status === "running") {
+  } else if (task.status === "running") {
     updatedStatus = "done";
   } else {
     updatedStatus = "archive";
   }
-  
-  
+
+
   return (
     <div className="bg-secondary/10 rounded-md p-5">
       <h1
@@ -63,10 +51,9 @@ const TaskCard = ({ task }) => {
       <div className="flex justify-between mt-3">
         <p>{task?.date}</p>
         <div className="flex gap-3">
-          <button 
-          // onClick={() => dispatch(removeTask(task.id))} 
-          onClick={() => handleRemove(task._id)}
-          title="Delete">
+          <button
+            onClick={() => removeTaskMutation(task._id)}
+            title="Delete">
             <TrashIcon className="h-5 w-5 text-red-500" />
           </button>
           <button onClick={() => handleUpdate(task._id, updatedStatus)} title="In progress">
