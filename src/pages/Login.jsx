@@ -2,12 +2,15 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import loginImage from '../assets/image/login.svg';
 import { signInWithGoogle } from '../redux/features/users/usersSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const {isLoading, isError, error, email} = useSelector((state) => state.usersSlice);
   const dispatch = useDispatch();
 
   const onSubmit = ({ email, password }) => {
@@ -17,9 +20,20 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    //  Google Login
       dispatch(signInWithGoogle());
   };
+
+  useEffect(() => {
+    if(isError && error){
+      toast.error(error);
+    }
+  }, [isError, error]);
+
+  useEffect(() => {
+    if(!isLoading && email){
+      navigate('/');
+    }
+  }, [isLoading, email, navigate]);
 
   return (
     <div className="flex max-w-7xl h-screen items-center mx-auto">
