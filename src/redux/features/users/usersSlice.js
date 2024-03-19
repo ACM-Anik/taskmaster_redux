@@ -14,7 +14,6 @@ const initialState = {
 export const createUser = createAsyncThunk("usersSlice/createUser", async ({ email, password, name }) => {
 
     const data = await createUserWithEmailAndPassword(auth, email, password);
-
     await updateProfile(auth.currentUser, {
         displayName: name,
     });
@@ -31,12 +30,13 @@ export const signInWithGoogle = createAsyncThunk(
     "usersSlice/signInWithGoogle",
     async () => {
         const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
+        const data = await signInWithPopup(auth, provider);
 
+        console.log(data);
         return {
-            email: result.user.email,
-            name: result.user.displayName,
-          };
+            email: data.user.email,
+            name: data.user.displayName,
+        };
     }
 );
 
@@ -82,6 +82,27 @@ const usersSlice = createSlice({
                 state.error = '';
             })
             .addCase(createUser.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.email = '';
+                state.name = '';
+                state.error = action.error.message;
+            })
+            .addCase(signInWithGoogle.pending, (state) => {
+                state.isLoading = true;
+                state.isError = false;
+                state.email = '';
+                state.name = '';
+                state.error = '';
+            })
+            .addCase(signInWithGoogle.fulfilled, (state, { payload }) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.email = payload.email;
+                state.name = payload.name;
+                state.error = '';
+            })
+            .addCase(signInWithGoogle.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.email = '';
