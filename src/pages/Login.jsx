@@ -1,9 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import loginImage from '../assets/image/login.svg';
+import { signInWithGoogle } from '../redux/features/users/usersSlice';
+import { useDispatch } from 'react-redux';
+
+
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = ({ email, password }) => {
     // Email Password Login
@@ -13,6 +18,7 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     //  Google Login
+      dispatch(signInWithGoogle());
   };
 
   return (
