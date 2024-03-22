@@ -23,14 +23,14 @@ const Profile = () => {
     })
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(
-  //     setUser({
-  //       name: user.displayName,
-  //       email: user.email,
-  //     })
-  //   );
-  // }, []);
+  useEffect(() => {
+    dispatch(
+      setUser({
+        name: user.displayName,
+        email: user.email,
+      })
+    );
+  }, []);
 
 
   const [user, setUser] = useState({
