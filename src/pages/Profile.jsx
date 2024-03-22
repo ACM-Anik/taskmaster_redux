@@ -1,6 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import auth from '../utils/firebase.config';
+// import { setUser } from '../redux/features/users/usersSlice';
 
 const Profile = () => {
+  const dispatch = useDispatch();
+
+  const [userBio, setUserBio] = useState({
+    name: '',
+    email: '',
+  });
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserBio({
+          name: user.displayName,
+          email: user.email,
+        });
+      }
+    })
+  }, []);
+
+  // useEffect(() => {
+  //   dispatch(
+  //     setUser({
+  //       name: user.displayName,
+  //       email: user.email,
+  //     })
+  //   );
+  // }, []);
+
 
   const [user, setUser] = useState({
     name: "Anik C Mojumder",
