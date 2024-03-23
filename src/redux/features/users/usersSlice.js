@@ -3,11 +3,11 @@ import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, up
 import auth from "../../../utils/firebase.config";
 
 const initialState = {
-    name: '',
-    email: '',
+    name: "",
+    email: "",
     isLoading: true,
     isError: false,
-    error: '',
+    error: "",
 };
 
 // CreateUser Thunk:---

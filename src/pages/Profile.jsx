@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
-import { onAuthStateChanged, updateProfile } from 'firebase/auth';
+import { useState } from 'react';
+import { updateProfile } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../redux/features/users/usersSlice';
 import auth from '../utils/firebase.config';
 
 
 const Profile = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const user = useSelector((state) => state.usersSlice);
   // console.log(user);
+  // const [userData, useuserData] = useState();
+
 
   const [editing, setEditing] = useState(false);
   const handleEditClick = () => {
@@ -16,17 +17,22 @@ const Profile = () => {
   };
   const handleSaveClick = () => {
     setEditing(false);
-    // Logic to save changes
   };
   const handleCancelClick = () => {
     setEditing(false);
-    // Reset form fields if necessary
   };
 
   const handleChangeName = (e) => {
-    const value = e.target;
-    console.log('value', value);
+    const name = e.target.value;
+    console.log('name', name);
 
+    if (name) {
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+    }
+
+    // dispatch(setUser({ ...user, [name]: value }));
     // dispatch(
     //   setUser({
     //     name: value,
@@ -35,21 +41,10 @@ const Profile = () => {
   };
 
   const handleChangeEmail = (e) => {
-    const value = e.target;
-    console.log('value', value);
-
-    // dispatch(
-    //   setUser({
-    //     email: value,
-    //   })
-    // )
+    const email = e.target;
+    console.log('email', email);
   };
 
-  useEffect(() => {
-    // updateProfile(auth.currentUser, {
-    //   displayName: name,
-    // });
-  }, []);
 
 
   return (
@@ -83,7 +78,6 @@ const Profile = () => {
         <div>
           <p><strong>Name:</strong> {user?.name}</p>
           <p><strong>Email:</strong> {user?.email}</p>
-          {/* Display other user info */}
           <button onClick={handleEditClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4">
             Edit
           </button>
