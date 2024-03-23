@@ -16,7 +16,6 @@ export const createUser = createAsyncThunk("usersSlice/createUser", async ({ ema
     await updateProfile(auth.currentUser, {
         displayName: name,
     });
-    console.log(data);
 
     return {
         email: data.user.email,

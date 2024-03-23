@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { updateProfile } from 'firebase/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import auth from '../utils/firebase.config';
 
 
@@ -8,8 +8,6 @@ const Profile = () => {
   // const dispatch = useDispatch();
   const user = useSelector((state) => state.usersSlice);
   // console.log(user);
-  // const [userData, useuserData] = useState();
-
 
   const [editing, setEditing] = useState(false);
   const handleEditClick = () => {
@@ -32,7 +30,7 @@ const Profile = () => {
       });
     }
 
-    // dispatch(setUser({ ...user, [name]: value }));
+    // dispatch(setUser({ ...user, name: value }));
     // dispatch(
     //   setUser({
     //     name: value,
