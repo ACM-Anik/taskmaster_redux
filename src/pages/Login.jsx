@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import loginImage from '../assets/image/login.svg';
-import { signInWithGoogle } from '../redux/features/users/usersSlice';
+import { loginUser, signInWithGoogle } from '../redux/features/users/usersSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
@@ -10,31 +10,37 @@ import toast from 'react-hot-toast';
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-  const {isLoading, isError, error, email} = useSelector((state) => state.usersSlice);
+  const { isLoading, isError, error, email } = useSelector((state) => state.usersSlice);
   const dispatch = useDispatch();
 
+  // SignIn:-
   const onSubmit = ({ email, password }) => {
-    // Email Password Login
-
+    dispatch(loginUser({
+      email,
+      password,
+    }))
     console.log(email, password);
   };
 
+  // Google SignIn:-
   const handleGoogleLogin = () => {
-      dispatch(signInWithGoogle());
+    dispatch(signInWithGoogle());
   };
 
   useEffect(() => {
-    if(isError && error){
+    if (isError && error) {
       toast.error(error);
     }
   }, [isError, error]);
 
+  // Navigating by checking Loading:-
   useEffect(() => {
-    if(!isLoading && email){
+    if (!isLoading && email) {
       navigate('/');
     }
   }, [isLoading, email, navigate]);
 
+  
   return (
     <div className="flex max-w-7xl h-screen items-center mx-auto">
       <div className="w-1/2">
