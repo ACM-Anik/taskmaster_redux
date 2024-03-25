@@ -1,10 +1,12 @@
 import { BellIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import MyTasks from '../components/tasks/MyTasks';
 import TaskCard from '../components/tasks/TaskCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddTaskModal from '../components/tasks/AddTaskModal';
 import MenuDropdown from '../components/ui/MenuDropdown';
 import { useGetTasksQuery } from '../redux/features/tasks/taskApi';
+import { onAuthStateChanged } from 'firebase/auth';
+import auth from '../utils/firebase.config';
 
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,14 +17,23 @@ const Tasks = () => {
   });
   // OR, setting tagProviders at the baseApi queries
   **/
-  const {data: tasks} = useGetTasksQuery();
+  const { data: tasks } = useGetTasksQuery();
 
   const pendingTasks = tasks?.filter((item) => item.status === 'pending');
   const runningTasks = tasks?.filter((item) => item.status === 'running');
   const doneTasks = tasks?.filter((item) => item.status === 'done');
 
-  
+  // Setting the user Profile:-
+  const [user, setUser] = useState();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      }
+    });
+  }, []);
 
+  
   return (
     <>
       <AddTaskModal
@@ -49,7 +60,7 @@ const Tasks = () => {
 
               <MenuDropdown>
                 <div className="h-10 w-10 rounded-xl overflow-hidden">
-                  <img
+                  <img title={user?.displayName}
                     src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=644&q=80"
                     alt=""
                     className="object-cover h-full w-full "
