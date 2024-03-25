@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
-import { updateProfile } from 'firebase/auth';
+import { sendEmailVerification, updateEmail, updateProfile } from 'firebase/auth';
 import { useSelector } from 'react-redux';
 import auth from '../utils/firebase.config';
 
 
 const Profile = () => {
-  const [newName, setNewName]= useState();
+  const [newName, setNewName] = useState();
+  const [newEmail, setNewEmail] = useState();
   const user = useSelector((state) => state.usersSlice);
 
   useEffect(() => {
-    setNewName(user.name);
-    console.log('new user name', user.name)
-  }, [])
+    setNewName(user?.name);
+    setNewEmail(user?.email);
+
+    console.log('newUserName=', user.name);
+    console.log('newUserEmail=', user.email);
+  }, []);
 
   // Edit the profile:-
   const [editing, setEditing] = useState(false);
@@ -30,8 +34,8 @@ const Profile = () => {
     const inputName = e.target.name;
     const value = e.target.value;
 
-    console.log('title', inputName);
-    console.log('value', value);
+    console.log('title=', inputName);
+    console.log('value=', value);
 
     if (inputName === "name") {
       updateProfile(auth.currentUser, {
@@ -39,7 +43,25 @@ const Profile = () => {
       });
       setNewName(value);
     }
+    else if (inputName === "email") {
+      sendEmailVerification(auth.currentUser)
+        .then(() => {
+          // Email verification sent!
+          // ...
+        });
+
+      updateEmail(auth.currentUser, `${value}`)
+        .then(() => {
+          setNewEmail(value);
+        }).catch((error) => {
+          console.log('UpdateEmailError=', error);
+        });
+    }
   };
+
+  const handleDelete = () => {
+    console.log('Delete', 'Delete');
+  }
 
 
   return (
@@ -49,13 +71,14 @@ const Profile = () => {
         <div>
           <label className="block mb-2">Name:</label>
           <input type="text" name="name"
-            value={newName}
+            value={user ? newName : "Set Your Name"}
             onChange={handleChange}
             className="w-full border rounded-md px-4 py-2 mb-4"
           />
+
           <label className="block mb-2">Email:</label>
           <input type="email" name="email"
-            value={user?.email}
+            value={newEmail}
             onChange={handleChange}
             className="w-full border rounded-md px-4 py-2 mb-4"
           />
@@ -73,9 +96,14 @@ const Profile = () => {
         <div>
           <p><strong>Name:</strong> {user?.name}</p>
           <p><strong>Email:</strong> {user?.email}</p>
-          <button onClick={handleEditClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4">
-            Edit
-          </button>
+          <div className="flex justify-between">
+            <button onClick={handleEditClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4">
+              Edit Account
+            </button>
+            <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mt-4">
+              Delete Account
+            </button>
+          </div>
         </div>
       )}
     </div>
