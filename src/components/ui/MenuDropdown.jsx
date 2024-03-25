@@ -4,6 +4,7 @@ import { Fragment } from 'react';
 import auth from '../../utils/firebase.config';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/features/users/usersSlice';
+import { NavLink } from 'react-router-dom';
 
 export default function MenuDropdown({ children }) {
 
@@ -32,22 +33,23 @@ export default function MenuDropdown({ children }) {
                     <div className="px-1 py-1">
                         <Menu.Item>
                             {({ active }) => (
-                                <button
-                                    className={`${active ? 'bg-primary text-white' : 'text-gray-900'
-                                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                <NavLink
+                                    to="/profile"
+                                    className={`${active ? 'bg-primary text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                 >
                                     Profile
-                                </button>
+                                </NavLink>
                             )}
                         </Menu.Item>
                         <Menu.Item>
                             {({ active }) => (
-                                <button
+                                <NavLink
+                                    to="/settings"
                                     className={`${active ? 'bg-primary text-white' : 'text-gray-900'
                                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                 >
                                     Settings
-                                </button>
+                                </NavLink>
                             )}
                         </Menu.Item>
                         <Menu.Item>
