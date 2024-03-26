@@ -60,7 +60,7 @@ const Profile = () => {
     }
   };
 
-  const [click, setClick] = useState(null);
+  const [click, setClick] = useState(false);
 
   const handleDelete = () => {
     const user = auth.currentUser;
@@ -91,7 +91,7 @@ const Profile = () => {
         </div>
         <div className="flex border-l border-gray-200">
           <button
-            onClick={() => [toast.dismiss(t.id), setClick(1)]}
+            onClick={() => [toast.dismiss(t.id), setClick(true)]}
             className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             Delete
@@ -100,7 +100,8 @@ const Profile = () => {
       </div>
     ));
 
-    if(click){
+    console.log(click);
+    if(click === true){
       deleteUser(user).then(() => {
         // User deleted.
       }).catch((error) => {
@@ -110,7 +111,7 @@ const Profile = () => {
       });
     }
 
-  }
+  };
 
 
   return (
