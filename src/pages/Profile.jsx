@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { deleteUser, reauthenticateWithCredential, sendEmailVerification, updateEmail, updateProfile } from 'firebase/auth';
+import { EmailAuthProvider, deleteUser, reauthenticateWithCredential, sendEmailVerification, updateEmail, updateProfile } from 'firebase/auth';
 import { useSelector } from 'react-redux';
 import auth from '../utils/firebase.config';
 import Swal from 'sweetalert2';
@@ -67,19 +67,20 @@ const Profile = () => {
     }
 
     const promptForCredentials = () => {
-      const password = prompt('Please enter your password:');
-      const email = prompt('Please enter your password:');
-      if (email && password) {
-        return { email, password };
-      } else {
-        return null;
-      }
+      const password = prompt("Provide your password: ");
+          if (password) {
+            return password;
+          } else {
+            return null;
+          }
+        
     };
 
     const reauthenticate = () => {
-      const credential = promptForCredentials();
+      const password = promptForCredentials();
 
-      if (credential) {
+      if (password) {
+        const credential = EmailAuthProvider.credential(user.email, password);
         reauthenticateWithCredential(user, credential)
           .then(() => {
             deleteUser(user).then(() => {
