@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { deleteUser, sendEmailVerification, updateEmail, updateProfile } from 'firebase/auth';
+import { deleteUser, reauthenticateWithCredential, sendEmailVerification, updateEmail, updateProfile } from 'firebase/auth';
 import { useSelector } from 'react-redux';
 import auth from '../utils/firebase.config';
 import Swal from 'sweetalert2';
@@ -13,9 +13,7 @@ const Profile = () => {
   useEffect(() => {
     setNewName(user?.name);
     setNewEmail(user?.email);
-
-    console.log('newUserName=', user.name);
-    console.log('newUserEmail=', user.email);
+    // console.log('newUserName=', user.name);
   }, []);
 
   // Edit the profile:-
@@ -60,9 +58,49 @@ const Profile = () => {
     }
   };
 
-
+  // Delete user account:--
   const handleDelete = () => {
     const user = auth.currentUser;
+    if (!user) {
+      console.error('User is not authenticated.');
+      return;
+    }
+
+    const promptForCredentials = () => {
+      const password = prompt('Please enter your password:');
+      const email = prompt('Please enter your password:');
+      if (email && password) {
+        return { email, password };
+      } else {
+        return null;
+      }
+    };
+
+    const reauthenticate = () => {
+      const credential = promptForCredentials();
+
+      if (credential) {
+        reauthenticateWithCredential(user, credential)
+          .then(() => {
+            deleteUser(user).then(() => {
+              Swal.fire({
+                title: "Account Deleted!",
+                text: "Your account has been deleted.",
+                icon: "success"
+              });
+            }).catch((error) => {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `Something went wrong! ${error}`,
+                footer: '<a href="#">Why do I have this issue?</a>'
+              });
+            });
+          }).catch((error) => {
+            console.error('Reauthentication error:', error);
+          });
+      }
+    };
 
     Swal.fire({
       title: "Are you want to delete your account?",
@@ -74,20 +112,7 @@ const Profile = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteUser(user).then(() => {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
-          });
-        }).catch((error) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: `Something went wrong! ${error}`,
-            footer: '<a href="#">Why do I have this issue?</a>'
-          });
-        });
+        reauthenticate();
       }
     });
 
