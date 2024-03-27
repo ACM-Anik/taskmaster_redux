@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { EmailAuthProvider, deleteUser, reauthenticateWithCredential, sendEmailVerification, updateEmail, updateProfile } from 'firebase/auth';
+import { EmailAuthProvider, deleteUser, reauthenticateWithCredential, updateProfile } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import auth from '../utils/firebase.config';
 import Swal from 'sweetalert2';
@@ -9,12 +9,13 @@ import { setUser } from '../redux/features/users/usersSlice';
 const Profile = () => {
   const dispatch = useDispatch();
   const [newName, setNewName] = useState();
-  const [newEmail, setNewEmail] = useState();
-  const user = useSelector((state) => state.usersSlice);
+  // const [newEmail, setNewEmail] = useState();
+  const [newPhoto, setNewPhoto] = useState();
 
+  const user = useSelector((state) => state.usersSlice);
   useEffect(() => {
     setNewName(user?.name);
-    setNewEmail(user?.email);
+    // setNewEmail(user?.email);
     // console.log('newUserName=', user.name);
   }, []);
 
@@ -44,20 +45,26 @@ const Profile = () => {
       });
       setNewName(value);
     }
-    else if (inputName === "email") {
-      sendEmailVerification(auth.currentUser)
-        .then(() => {
-          // Email verification sent!
-          // ...
-        });
-
-      updateEmail(auth.currentUser, `${value}`)
-        .then(() => {
-          setNewEmail(value);
-        }).catch((error) => {
-          console.log('UpdateEmailError=', error);
-        });
+    if (inputName === "photo") {
+      updateProfile(auth.currentUser, {
+        photoURL: value,
+      });
+      setNewPhoto(value);
     }
+    // if (inputName === "email") {
+    //   sendEmailVerification(auth.currentUser)
+    //     .then(() => {
+    //       // Email verification sent!
+    //       // ...
+    //     });
+
+    //   updateEmail(auth.currentUser, `${value}`)
+    //     .then(() => {
+    //       setNewEmail(value);
+    //     }).catch((error) => {
+    //       console.log('UpdateEmailError=', error);
+    //     });
+    // }
   };
 
   // Delete user account:--
@@ -70,19 +77,17 @@ const Profile = () => {
 
     const promptForCredentials = () => {
       const password = prompt("Provide your password: ");
-          if (password) {
-            return password;
-          } else {
-            return null;
-          }
-        
+      if (password) {
+        return password;
+      } else {
+        return null;
+      }
     };
 
     const reauthenticate = () => {
       const password = promptForCredentials();
-
       if (password) {
-        const credential = EmailAuthProvider.credential(user.email, password);
+        const credential = EmailAuthProvider.credential(user?.email, password);
         reauthenticateWithCredential(user, credential)
           .then(() => {
             deleteUser(user).then(() => {
@@ -106,7 +111,7 @@ const Profile = () => {
               });
             });
           }).catch((error) => {
-            console.error('Reauthentication error:', error);
+            console.error('Re-authentication error:', error);
           });
       }
     };
@@ -124,7 +129,6 @@ const Profile = () => {
         reauthenticate();
       }
     });
-
   };
 
 
@@ -133,6 +137,14 @@ const Profile = () => {
       <h1 className="text-3xl font-bold mb-4">Profile</h1>
       {editing ? (
         <div>
+          <label className="block mb-2">Photo:</label>
+          <img className="w-32 my-2" src={newPhoto} alt="user" />
+
+          <input type="text" name="photo"
+            onChange={handleChange}
+            className="w-full border rounded-md px-4 py-2 mb-4"
+          />
+
           <label className="block mb-2">Name:</label>
           <input type="text" name="name"
             value={user ? newName : "Set Your Name"}
@@ -142,7 +154,7 @@ const Profile = () => {
 
           <label className="block mb-2">Email:</label>
           <input type="email" name="email"
-            value={newEmail}
+            value={user?.email}
             onChange={handleChange}
             className="w-full border rounded-md px-4 py-2 mb-4"
           />
@@ -158,6 +170,7 @@ const Profile = () => {
         </div>
       ) : (
         <div>
+          <img className="w-32 my-2" src={newPhoto} alt="user" />
           <p><strong>Name:</strong> {user?.name}</p>
           <p><strong>Email:</strong> {user?.email}</p>
           <div className="flex justify-between">
