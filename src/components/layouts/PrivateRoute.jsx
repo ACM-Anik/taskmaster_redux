@@ -26,7 +26,8 @@ const PrivateRoute = ({ children }) => {
         dispatch(toggleLoading(false));
       }
     })
-  }, []);
+    console.log("call");
+  }, [dispatch]);
 
   if (isLoading) {
     return <Loading />;

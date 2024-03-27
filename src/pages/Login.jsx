@@ -18,8 +18,7 @@ const Login = () => {
     dispatch(loginUser({
       email,
       password,
-    }))
-    console.log(email, password);
+    }));
   };
 
   // Google SignIn:-
@@ -40,7 +39,7 @@ const Login = () => {
     }
   }, [isLoading, email, navigate]);
 
-  
+
   return (
     <div className="flex max-w-7xl h-screen items-center mx-auto">
       <div className="w-1/2">

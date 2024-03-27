@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { EmailAuthProvider, deleteUser, reauthenticateWithCredential, sendEmailVerification, updateEmail, updateProfile } from 'firebase/auth';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import auth from '../utils/firebase.config';
 import Swal from 'sweetalert2';
+import { setUser } from '../redux/features/users/usersSlice';
 
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const [newName, setNewName] = useState();
   const [newEmail, setNewEmail] = useState();
   const user = useSelector((state) => state.usersSlice);
@@ -84,6 +86,12 @@ const Profile = () => {
         reauthenticateWithCredential(user, credential)
           .then(() => {
             deleteUser(user).then(() => {
+              dispatch(
+                setUser({
+                  name: "",
+                  email: "",
+                })
+              );
               Swal.fire({
                 title: "Account Deleted!",
                 text: "Your account has been deleted.",
