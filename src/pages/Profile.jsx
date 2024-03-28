@@ -1,23 +1,24 @@
 import { useEffect, useState } from 'react';
-import { EmailAuthProvider, deleteUser, reauthenticateWithCredential, updateProfile } from 'firebase/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { EmailAuthProvider, deleteUser, onAuthStateChanged, reauthenticateWithCredential, updateProfile } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
 import auth from '../utils/firebase.config';
-import Swal from 'sweetalert2';
 import { setUser } from '../redux/features/users/usersSlice';
+import Swal from 'sweetalert2';
 
 
 const Profile = () => {
   const dispatch = useDispatch();
   const [newName, setNewName] = useState();
-  // const [newEmail, setNewEmail] = useState();
   const [newPhoto, setNewPhoto] = useState();
+  const [email, setEmail] = useState();
 
-  const user = useSelector((state) => state.usersSlice);
-  useEffect(() => {
-    setNewName(user?.name);
-    // setNewEmail(user?.email);
-    // console.log('newUserName=', user.name);
-  }, []);
+  useEffect(()=> {
+    onAuthStateChanged(auth, (user) =>{
+      setNewName(user.displayName);
+      setNewPhoto(user.photoURL);
+      setEmail(user.email);
+    });
+  },[]);
 
   // Edit the profile:-
   const [editing, setEditing] = useState(false);
@@ -31,13 +32,12 @@ const Profile = () => {
     setEditing(false);
   };
 
-  // Changing the name:-
+  // Changing the name, email, PhotoURL:-
   const handleChange = (e) => {
     const inputName = e.target.name;
     const value = e.target.value;
-
-    console.log('title=', inputName);
-    console.log('value=', value);
+    // console.log('title=', inputName);
+    // console.log('value=', value);
 
     if (inputName === "name") {
       updateProfile(auth.currentUser, {
@@ -51,21 +51,8 @@ const Profile = () => {
       });
       setNewPhoto(value);
     }
-    // if (inputName === "email") {
-    //   sendEmailVerification(auth.currentUser)
-    //     .then(() => {
-    //       // Email verification sent!
-    //       // ...
-    //     });
-
-    //   updateEmail(auth.currentUser, `${value}`)
-    //     .then(() => {
-    //       setNewEmail(value);
-    //     }).catch((error) => {
-    //       console.log('UpdateEmailError=', error);
-    //     });
-    // }
   };
+  console.log(newPhoto);
 
   // Delete user account:--
   const handleDelete = () => {
@@ -74,7 +61,6 @@ const Profile = () => {
       console.error('User is not authenticated.');
       return;
     }
-
     const promptForCredentials = () => {
       const password = prompt("Provide your password: ");
       if (password) {
@@ -83,7 +69,6 @@ const Profile = () => {
         return null;
       }
     };
-
     const reauthenticate = () => {
       const password = promptForCredentials();
       if (password) {
@@ -115,7 +100,6 @@ const Profile = () => {
           });
       }
     };
-
     Swal.fire({
       title: "Are you want to delete your account?",
       text: "You won't be able to continue browsing!",
@@ -138,23 +122,22 @@ const Profile = () => {
       {editing ? (
         <div>
           <label className="block mb-2">Photo:</label>
-          <img className="w-32 my-2" src={newPhoto} alt="user" />
-
           <input type="text" name="photo"
+            value={`${newPhoto}`}
             onChange={handleChange}
             className="w-full border rounded-md px-4 py-2 mb-4"
           />
 
           <label className="block mb-2">Name:</label>
           <input type="text" name="name"
-            value={user ? newName : "Set Your Name"}
+            value={newName}
             onChange={handleChange}
             className="w-full border rounded-md px-4 py-2 mb-4"
           />
 
           <label className="block mb-2">Email:</label>
           <input type="email" name="email"
-            value={user?.email}
+            value={email}
             onChange={handleChange}
             className="w-full border rounded-md px-4 py-2 mb-4"
           />
@@ -171,8 +154,8 @@ const Profile = () => {
       ) : (
         <div>
           <img className="w-32 my-2" src={newPhoto} alt="user" />
-          <p><strong>Name:</strong> {user?.name}</p>
-          <p><strong>Email:</strong> {user?.email}</p>
+          <p><strong>Name:</strong> {newName}</p>
+          <p><strong>Email:</strong> {email}</p>
           <div className="flex justify-between">
             <button onClick={handleEditClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4">
               Edit Account
