@@ -52,7 +52,6 @@ const Profile = () => {
       setNewPhoto(value);
     }
   };
-  console.log(newPhoto);
 
   // Delete user account:--
   const handleDelete = () => {
@@ -117,7 +116,8 @@ const Profile = () => {
 
 
   return (
-    <div className="max-w-md mx-auto my-8 bg-white p-8 rounded-lg shadow-md">
+    <div className="max-w-md mx-auto my-8 p-8 rounded-lg shadow-md">
+      <div className="w-full h-full bg-cover bg-center opacity-10 absolute top-0 left-0 -z-10" style={{ backgroundImage: `url(${newPhoto})` }}></div>
       <h1 className="text-3xl font-bold mb-4">Profile</h1>
       {editing ? (
         <div>
