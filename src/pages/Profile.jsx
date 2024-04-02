@@ -9,26 +9,21 @@ import MenuDropdown from '../components/ui/MenuDropdown';
 
 
 const Profile = () => {
-  // Setting the user Profile:-
+  const dispatch = useDispatch();
   const [user, setUser] = useState();
+  const [newName, setNewName] = useState();
+  const [newPhoto, setNewPhoto] = useState();
+  const [email, setEmail] = useState();
+  
+  
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        setNewName(user.displayName);
+        setNewPhoto(user.photoURL);
+        setEmail(user.email);
       }
-    });
-  }, []);
-
-  const dispatch = useDispatch();
-  const [newName, setNewName] = useState();
-  const [newPhoto, setNewPhoto] = useState();
-  const [email, setEmail] = useState();
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      setNewName(user.displayName);
-      setNewPhoto(user.photoURL);
-      setEmail(user.email);
     });
   }, []);
 
