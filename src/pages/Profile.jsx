@@ -192,9 +192,9 @@ const Profile = () => {
               </div>
             ) : (
               <div>
-                <p><strong>User Photo:</strong><img className="w-44 border-2 shadow" src={newPhoto} alt="user photo" /> </p>
-                <p><strong>User Name:</strong> {newName}</p>
-                <p><strong>User Email:</strong> {email}</p>
+                <p className="mb-2"><strong>User Photo:</strong><img className="w-44 border-2 shadow" src={newPhoto} alt="user photo" /> </p>
+                <p className="mb-2"><strong>User Name:</strong> {newName}</p>
+                <p className="mb-2"><strong>User Email:</strong> {email}</p>
                 <div className="flex justify-between">
                   <button onClick={handleEditClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4 flex gap-2">
                     <span>Edit Account</span> 
