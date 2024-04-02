@@ -2,23 +2,35 @@ import { useEffect, useState } from 'react';
 import { EmailAuthProvider, deleteUser, onAuthStateChanged, reauthenticateWithCredential, updateProfile } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import auth from '../utils/firebase.config';
-import { setUser } from '../redux/features/users/usersSlice';
 import Swal from 'sweetalert2';
+import { BellIcon, MagnifyingGlassIcon, TrashIcon, WrenchIcon } from '@heroicons/react/24/outline';
+import MenuDropdown from '../components/ui/MenuDropdown';
+
 
 
 const Profile = () => {
+  // Setting the user Profile:-
+  const [user, setUser] = useState();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      }
+    });
+  }, []);
+
   const dispatch = useDispatch();
   const [newName, setNewName] = useState();
   const [newPhoto, setNewPhoto] = useState();
   const [email, setEmail] = useState();
 
-  useEffect(()=> {
-    onAuthStateChanged(auth, (user) =>{
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
       setNewName(user.displayName);
       setNewPhoto(user.photoURL);
       setEmail(user.email);
     });
-  },[]);
+  }, []);
 
   // Edit the profile:-
   const [editing, setEditing] = useState(false);
@@ -116,57 +128,95 @@ const Profile = () => {
 
 
   return (
-    <div className="max-w-md mx-auto my-8 p-8 bg-white rounded-lg shadow-md">
-      <div className="w-full h-full bg-cover bg-center opacity-10 absolute top-0 left-0 -z-10" style={{ backgroundImage: `url(${newPhoto})` }}></div>
-      <h1 className="text-3xl font-bold mb-4">Profile</h1>
-      {editing ? (
-        <div>
-          <label className="block mb-2">Photo:</label>
-          <input type="text" name="photo"
-            value={`${newPhoto}`}
-            onChange={handleChange}
-            className="w-full border rounded-md px-4 py-2 mb-4"
-          />
+    <>
+      <div className="h-screen">
+        <div className="px-10 pt-10">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="font-semibold text-3xl">Profile</h1>
+            </div>
 
-          <label className="block mb-2">Name:</label>
-          <input type="text" name="name"
-            value={newName}
-            onChange={handleChange}
-            className="w-full border rounded-md px-4 py-2 mb-4"
-          />
+            <div className="flex gap-5">
+              <button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl h-10 w-10  grid place-content-center text-secondary hover:text-white transition-all">
+                <MagnifyingGlassIcon className="h-6 w-6" />
+              </button>
+              <button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl h-10 w-10 grid place-content-center text-secondary hover:text-white transition-all">
+                <BellIcon className="h-6 w-6" />
+              </button>
 
-          <label className="block mb-2">Email:</label>
-          <input type="email" name="email"
-            value={email}
-            onChange={handleChange}
-            className="w-full border rounded-md px-4 py-2 mb-4"
-          />
-
-          <div className="flex justify-between">
-            <button onClick={handleSaveClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mr-4">
-              Save
-            </button>
-            <button onClick={handleCancelClick} className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md">
-              Cancel
-            </button>
+              <MenuDropdown>
+                <div className="h-10 w-10 rounded-xl overflow-hidden">
+                  <img
+                    title={user?.displayName}
+                    src={user?.photoURL ?
+                      user.photoURL
+                      :
+                      "https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=644&q=80"
+                    }
+                    alt="profile"
+                    className="object-cover h-full w-full "
+                  />
+                </div>
+              </MenuDropdown>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div>
-          <img className="w-32 my-2" src={newPhoto} alt="user" />
-          <p><strong>Name:</strong> {newName}</p>
-          <p><strong>Email:</strong> {email}</p>
-          <div className="flex justify-between">
-            <button onClick={handleEditClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4">
-              Edit Account
-            </button>
-            <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mt-4">
-              Delete Account
-            </button>
+
+          <div className="space-y-3 max-w-lg m-auto my-8 p-8 bg-white rounded-lg shadow-md">
+            <div className="w-full h-full bg-cover bg-center opacity-10 absolute top-0 left-0 -z-10" style={{ backgroundImage: `url(${newPhoto})` }}></div>
+            {editing ? (
+              <div>
+                <label className="block mb-2">Photo:</label>
+                <input type="text" name="photo"
+                  value={`${newPhoto}`}
+                  onChange={handleChange}
+                  className="w-full border rounded-md px-4 py-2 mb-4"
+                />
+
+                <label className="block mb-2">Name:</label>
+                <input type="text" name="name"
+                  value={newName}
+                  onChange={handleChange}
+                  className="w-full border rounded-md px-4 py-2 mb-4"
+                />
+
+                <label className="block mb-2">Email:</label>
+                <input type="email" name="email"
+                  value={email}
+                  onChange={handleChange}
+                  className="w-full border rounded-md px-4 py-2 mb-4"
+                />
+
+                <div className="flex justify-between">
+                  <button onClick={handleSaveClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mr-4">
+                    Save
+                  </button>
+                  <button onClick={handleCancelClick} className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <p><strong>User Photo:</strong><img className="w-44 border-2 shadow" src={newPhoto} alt="user photo" /> </p>
+                <p><strong>User Name:</strong> {newName}</p>
+                <p><strong>User Email:</strong> {email}</p>
+                <div className="flex justify-between">
+                  <button onClick={handleEditClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4 flex gap-2">
+                    <span>Edit Account</span> 
+                    <WrenchIcon className="h-6 w-6" />
+                  </button>
+                  <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mt-4 flex gap-2">
+                    <span>Delete Account</span> 
+                    <TrashIcon className="h-6 w-6" />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
+
         </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 
