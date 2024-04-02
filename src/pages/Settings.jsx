@@ -63,7 +63,7 @@ const Settings = () => {
               </div>
               <div className="space-y-3">
                 {tasks?.map((item) => (
-                  <div key={item?._id} className="bg-slate-400 p-3 rounded-lg">
+                  <div key={item?._id} className="bg-blue-200 p-3 rounded-lg">
                     <h1 className="text-xl">Settings</h1>
                   </div>
                 ))}

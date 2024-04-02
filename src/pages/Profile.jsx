@@ -156,7 +156,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="space-y-3 max-w-lg m-auto my-8 p-8 bg-white rounded-lg shadow-md">
+          <div className="max-w-lg m-auto my-8 p-8 bg-white rounded-lg shadow-md">
             <div className="w-full h-full bg-cover bg-center opacity-10 absolute top-0 left-0 -z-10" style={{ backgroundImage: `url(${newPhoto})` }}></div>
             {editing ? (
               <div>
