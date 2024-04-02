@@ -156,7 +156,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="max-w-lg m-auto my-8 p-8 bg-white rounded-lg shadow-md">
+          <div className="max-w-lg m-auto my-8 p-8 bg-[#D3DDF9] rounded-lg shadow-md">
             <div className="w-full h-full bg-cover bg-center opacity-10 absolute top-0 left-0 -z-10" style={{ backgroundImage: `url(${newPhoto})` }}></div>
             {editing ? (
               <div>
@@ -166,14 +166,12 @@ const Profile = () => {
                   onChange={handleChange}
                   className="w-full border rounded-md px-4 py-2 mb-4"
                 />
-
                 <label className="block mb-2">Name:</label>
                 <input type="text" name="name"
                   value={newName}
                   onChange={handleChange}
                   className="w-full border rounded-md px-4 py-2 mb-4"
                 />
-
                 <label className="block mb-2">Email:</label>
                 <input type="email" name="email"
                   value={email}
@@ -192,7 +190,7 @@ const Profile = () => {
               </div>
             ) : (
               <div>
-                <p className="mb-2"><strong>User Photo:</strong><img className="w-44 border-2 shadow" src={newPhoto} alt="user photo" /> </p>
+                <p className="mb-2"><strong>User Photo:</strong><img className="w-44 bg-white rounded shadow" src={newPhoto} alt="user photo" /> </p>
                 <p className="mb-2"><strong>User Name:</strong> {newName}</p>
                 <p className="mb-2"><strong>User Email:</strong> {email}</p>
                 <div className="flex justify-between">
