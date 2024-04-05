@@ -4,10 +4,9 @@ import {
 } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateStatus, userTasks } from '../../redux/features/tasks/tasksSlice';
+import { userTasks } from '../../redux/features/tasks/tasksSlice';
 import TaskDetailsModal from './TaskDetailsModal';
-import { useGetTasksQuery } from '../../redux/features/tasks/taskApi';
-
+import { useGetTasksQuery, useUpdateTaskMutation } from '../../redux/features/tasks/taskApi';
 
 
 const MyTasks = () => {
@@ -18,6 +17,9 @@ const MyTasks = () => {
   // console.log(userName);
   // console.log(tasks);
   // console.log(userSpecificTasks);
+  const [updateTask, { data: updateData, error: updateError }] = useUpdateTaskMutation();  
+  console.log('updateData', updateData);
+  console.log('updateError', updateError);
   
   const [isOpen, setIsOpen] = useState(false);
   const [taskId, setTaskId] = useState(0);
@@ -30,6 +32,17 @@ const MyTasks = () => {
     setTaskId(id);
     setIsOpen(!isOpen);
   }
+
+  const handleUpdate = (id, updatedStatus) => {
+    const data = {
+      status: updatedStatus,
+    };
+    const options = {
+      id: id,
+      data: data,
+    };
+    updateTask(options);
+  };
   
   return (
     <div>
@@ -43,10 +56,10 @@ const MyTasks = () => {
           >
             <h1>{item?.title}</h1>
             <div className="flex gap-3">
-              <button onClick={() => handleModal(item.id)} className="grid place-content-center" title="Details">
+              <button onClick={() => handleModal(item._id)} className="grid place-content-center" title="Details">
                 <DocumentMagnifyingGlassIcon className="w-5 h-5 text-primary" />
               </button>
-              <button onClick={() => dispatch(updateStatus({id: item.id, status: "done"}))} className="grid place-content-center" title="Done">
+              <button onClick={() => handleUpdate(item._id, {status: "done"})} className="grid place-content-center" title="Done">
                 <CheckIcon className="w-5 h-5 text-primary" />
               </button>
             </div>
