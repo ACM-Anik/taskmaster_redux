@@ -41,10 +41,10 @@ const tasksSlice = createSlice({
             // console.log('payload', payload);
         },
         userTasks: (state, { payload }) => {
-            state.userSpecificTasks = state.tasks.filter((item) =>
-                item.assignedTo === payload && 
-                (item.status === "pending" || item.status === "running"),
-            );
+            state.userSpecificTasks = payload.dBTasks?.filter((item) => item.assignedTo === payload.userName && (item.status === "pending" || item.status === "running"));
+            // console.log('payload', payload.userName);
+            // console.log('payload', payload.dBTasks);
+            // console.log('UserSpecific', state.userSpecificTasks);
         },
     },
 });
