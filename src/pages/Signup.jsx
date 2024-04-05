@@ -50,7 +50,6 @@ const Signup = () => {
         password,
         name,
       }));
-    // console.log(name, email, password);
   };
 
   const handleGoogleLogin = () => {

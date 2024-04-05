@@ -12,8 +12,8 @@ const MyTasks = () => {
   const { tasks, userSpecificTasks } = useSelector((state) => state.tasksSlice);
   const { name: userName } = useSelector((state) => state.usersSlice);
   const dispatch = useDispatch();
-  // console.log(userName);
-  // console.log(userSpecificTasks);
+  console.log(userName);
+  console.log(userSpecificTasks);
   
   const [isOpen, setIsOpen] = useState(false);
   const [taskId, setTaskId] = useState(0);

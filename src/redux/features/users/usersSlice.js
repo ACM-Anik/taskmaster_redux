@@ -34,7 +34,6 @@ export const loginUser = createAsyncThunk("usersSlice/loginUser", async ({ email
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-
             console.log('errorCode', errorCode);
             console.log('errorMessage', errorMessage);
         });
