@@ -11,11 +11,10 @@ import { useGetTasksQuery, useUpdateTaskMutation } from '../../redux/features/ta
 
 const MyTasks = () => {
   const {data: dBTasks} = useGetTasksQuery();
-  const { tasks, userSpecificTasks } = useSelector((state) => state.tasksSlice);
   const { name: userName } = useSelector((state) => state.usersSlice);
+  const { tasks, userSpecificTasks } = useSelector((state) => state.tasksSlice);
   const dispatch = useDispatch();
   // console.log(userName);
-  // console.log(tasks);
   // console.log(userSpecificTasks);
   const [updateTask, { data: updateData, error: updateError }] = useUpdateTaskMutation();  
   console.log('updateData', updateData);
@@ -28,11 +27,13 @@ const MyTasks = () => {
     dispatch(userTasks({userName, dBTasks}));
   }, [userName, tasks, dispatch, dBTasks]);
   
+  // Open modal:-
   const handleModal = (id) => {
     setTaskId(id);
     setIsOpen(!isOpen);
-  }
+  };
 
+  // Update Task:-
   const handleUpdate = (id, updatedStatus) => {
     const data = {
       status: updatedStatus,
