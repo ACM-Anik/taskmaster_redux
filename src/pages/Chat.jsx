@@ -38,10 +38,10 @@ const Chat = () => {
 
               <MenuDropdown>
                 <div className="h-10 w-10 rounded-xl overflow-hidden">
-                  <img 
+                  <img
                     title={user?.displayName}
-                    src={ user?.photoURL ? 
-                      user.photoURL 
+                    src={user?.photoURL ?
+                      user.photoURL
                       :
                       "https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=644&q=80"
                     }
@@ -56,7 +56,7 @@ const Chat = () => {
           <div className="grid grid-cols-1 gap-5 mt-10">
             <div className="relative h-[800px] overflow-auto">
               <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
-                <h1>Total Functions</h1>
+                <h1>Chatting with Ayon</h1>
                 <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
                   {tasks?.length}
                 </p>
@@ -64,7 +64,7 @@ const Chat = () => {
               <div className="space-y-3">
                 {tasks?.map((item) => (
                   <div key={item?._id} className="bg-blue-200 p-3 rounded-lg">
-                    <h1 className="text-xl">Settings</h1>
+                    <h1 className="text-xl">Accounts</h1>
                   </div>
                 ))}
               </div>
@@ -72,47 +72,67 @@ const Chat = () => {
           </div>
         </div>
 
-        <div className="col-span-3 border-l-2 border-secondary/20 px-10 pt-10">
-          <div>
-            <h1 className="text-xl">Shortcut Tools</h1>
+        <div className="col-span-3 border-l-2 border-secondary/20 px-6 pt-10">
+          
+            <h1 className="text-xl text-center">Chat Contacts</h1>
             <div className="flex flex-col items-center gap-3 mt-3">
-              <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-                  alt=""
-                  className="object-cover h-full w-full "
-                />
+
+              <div className="bg-blue-200 p-2 rounded-lg flex items-center justify-center">
+                <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                    alt=""
+                    className="object-cover h-full w-full "
+                  />
+                </div>
+                <h1 className="text-xl">Name</h1>
               </div>
-              <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-                  alt=""
-                  className="object-cover h-full w-full "
-                />
+
+              <div className="bg-blue-200 p-2 rounded-lg flex items-center justify-center">
+                <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                    alt=""
+                    className="object-cover h-full w-full "
+                  />
+                </div>
+                <h1 className="text-xl">Name</h1>
               </div>
-              <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-                  alt=""
-                  className="object-cover h-full w-full "
-                />
+
+              <div className="bg-blue-200 p-2 rounded-lg flex items-center justify-center">
+                <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                    alt=""
+                    className="object-cover h-full w-full "
+                  />
+                </div>
+                <h1 className="text-xl">Name</h1>
               </div>
-              <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-                  alt=""
-                  className="object-cover h-full w-full "
-                />
+
+              <div className="bg-blue-200 p-2 rounded-lg flex items-center justify-center">
+                <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                    alt=""
+                    className="object-cover h-full w-full "
+                  />
+                </div>
+                <h1 className="text-xl">Name</h1>
               </div>
-              <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-                  alt=""
-                  className="object-cover h-full w-full "
-                />
+
+              <div className="bg-blue-200 p-2 rounded-lg flex items-center justify-center">
+                <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                    alt=""
+                    className="object-cover h-full w-full "
+                  />
+                </div>
+                <h1 className="text-xl">Name</h1>
               </div>
             </div>
-          </div>
+          
         </div>
       </div>
     </>
