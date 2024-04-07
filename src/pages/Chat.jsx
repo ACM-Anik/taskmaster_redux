@@ -64,7 +64,7 @@ const Chat = () => {
               <div className="space-y-3">
                 {tasks?.map((item) => (
                   <div key={item?._id} className="bg-blue-200 p-3 rounded-lg">
-                    <h1 className="text-xl">Accounts</h1>
+                    <h1 className="text-xl">{item?.description}</h1>
                   </div>
                 ))}
               </div>
