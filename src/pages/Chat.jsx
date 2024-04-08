@@ -36,7 +36,7 @@ const Chat = () => {
             <div>
               <h1 className="font-semibold text-3xl">Chat</h1>
             </div>
-
+            {/* Nav Buttons:---------- */}
             <div className="flex gap-5">
               <button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl h-10 w-10  grid place-content-center text-secondary hover:text-white transition-all">
                 <MagnifyingGlassIcon className="h-6 w-6" />
@@ -44,7 +44,7 @@ const Chat = () => {
               <button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl h-10 w-10 grid place-content-center text-secondary hover:text-white transition-all">
                 <BellIcon className="h-6 w-6" />
               </button>
-
+              {/* Profile Dropdown:----------- */}
               <MenuDropdown>
                 <div className="h-10 w-10 rounded-xl overflow-hidden">
                   <img
@@ -61,6 +61,7 @@ const Chat = () => {
               </MenuDropdown>
             </div>
           </div>
+          {/* Chatting Page:---------- */}
           <div className="grid grid-cols-1 gap-5 mt-10">
             <div className="relative h-[800px] overflow-auto">
               <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
@@ -70,16 +71,20 @@ const Chat = () => {
                 </p>
               </div>
               <div className="space-y-3">
-                {tasks?.map((item) => (
+                {/* {tasks?.map((item) => (
                   <div key={item?._id} className="bg-blue-200 p-3 rounded-lg">
                     <h1 className="text-xl">{item?.description}</h1>
                   </div>
-                ))}
+                ))} */}
+                <div className="flex gap-2">
+                  <img className="h-10 w-10 rounded-full overflow-hidden" src={user?.photoURL} alt="profile" />
+                  <h1 className="text-lg bg-blue-200 w-fit p-2 rounded">Chat history of {user?.displayName}</h1>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
+        {/* Chat Contacts:---------- */}
         <div className="col-span-3 border-l-2 border-secondary/20 px-6 pt-10">
           <h1 className="text-xl text-center">Chat Contacts</h1>
           <div className="flex flex-col items-center gap-3 mt-3">

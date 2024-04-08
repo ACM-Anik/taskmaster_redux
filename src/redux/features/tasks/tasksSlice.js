@@ -46,9 +46,6 @@ const tasksSlice = createSlice({
         // Or, (Data from DB):--
         userTasks: (state, { payload }) => {
             state.userSpecificTasks = payload.dBTasks?.filter((item) => item.assignedTo === payload.userName && (item.status === "pending" || item.status === "running"));
-            // console.log('payload', payload.userName);
-            // console.log('payload', payload.dBTasks);
-            // console.log('UserSpecific', state.userSpecificTasks);
         },
     },
 });
