@@ -2,7 +2,7 @@ import baseApi from "../api/baseApi";
 
 const usersApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getUser: builder.query({
+        getUsers: builder.query({
             query: () => '/users',
             providesTags: ["Tasks"], //To refresh 
         }),
@@ -35,4 +35,4 @@ const usersApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useAddTaskMutation, useGetTasksQuery, useUpdateTaskMutation, useRemoveTaskMutation } = usersApi; 
+export const { useAddUserMutation, useGetUsersQuery, useUpdateUserMutation, useRemoveUserMutation } = usersApi; 
