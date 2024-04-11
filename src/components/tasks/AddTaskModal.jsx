@@ -67,7 +67,7 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                         {...register('assignedTo')}
                     >
                         {
-                            users?.map((member) => <option key={member?._id} value={member.name}>{member.name}</option>)
+                            users?.map((member) => <option key={member?._id} value={member?.name}>{member?.name}</option>)
                         }
                     </select>
                 </div>
