@@ -1,4 +1,4 @@
-import { BellIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { BellIcon, MagnifyingGlassIcon  } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import MenuDropdown from '../components/ui/MenuDropdown';
 import { useGetTasksQuery } from '../redux/features/tasks/taskApi';
@@ -7,6 +7,8 @@ import auth from '../utils/firebase.config';
 
 const Chat = () => {
   const { data: tasks } = useGetTasksQuery();
+  const [newMessage, setNewMessage] = useState('');
+  const [messages, setMessages] = useState([]);
 
   // Setting the user Profile:-
   const [user, setUser] = useState();
@@ -17,6 +19,23 @@ const Chat = () => {
       }
     });
   }, []);
+
+  const handleMessageChange = (e) => {
+    setNewMessage(e.target.value);
+  };
+
+  const sendMessage = () => {
+    // Create a message object with sender (assuming current user), timestamp, and content
+    const message = {
+      sender: 'Current User', // Can replace this with the actual sender's name or ID
+      timestamp: new Date().toISOString(), // Current timestamp
+      content: newMessage.trim() // Trim any leading or trailing whitespace from the message content
+    };
+    // For demonstration purposes, we'll just update the UI by adding the new message to the messages state
+    setMessages([...messages, message]);
+
+    setNewMessage('');
+  };
 
   const images = [
     "https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=644&q=80",
@@ -61,9 +80,10 @@ const Chat = () => {
               </MenuDropdown>
             </div>
           </div>
+
           {/* Chatting Page:---------- */}
           <div className="grid grid-cols-1 gap-5 mt-10">
-            <div className="relative h-[800px] overflow-auto">
+            <div className="relative min-h-full  overflow-auto">
               <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
                 <h1>Chatting with Ayon</h1>
                 <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
@@ -71,25 +91,49 @@ const Chat = () => {
                 </p>
               </div>
               <div className="space-y-3">
-                {/* {tasks?.map((item) => (
-                  <div key={item?._id} className="bg-blue-200 p-3 rounded-lg">
-                    <h1 className="text-xl">{item?.description}</h1>
-                  </div>
-                ))} */}
                 <div className="flex gap-2">
                   <img className="h-10 w-10 rounded-full overflow-hidden" src={user?.photoURL} alt="profile" />
-                  <h1 className="text-lg bg-blue-200 w-fit p-2 rounded">Chat history of {user?.displayName}</h1>
+                  <div className="flex flex-col">
+                    <h1 className="text-lg font-semibold">{user?.displayName}</h1>
+                    <p className="text-xs text-gray-500">Online</p>
+                  </div>
                 </div>
+                {/* Render Chat Messages */}
+                {messages.map((message, index) => (
+                  <div key={index} className={`message ${message.sender === user.displayName ? 'sent' : 'received'}`}>
+                    <div className="metadata">
+                      <span className="username">{message.sender}</span>
+                      <span className="timestamp">{message.timestamp}</span>
+                    </div>
+                    <div className="content">{message.content}</div>
+                  </div>
+                ))}
               </div>
             </div>
+            {/* Message Input Box */}
+            <div className="chat-input flex gap-2">
+              <input
+                type="text"
+                placeholder="Type your message..."
+                value={newMessage}
+                onChange={handleMessageChange}
+              />
+              <button
+                className=" border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl p-2 flex gap-1 text-secondary hover:text-white transition-all"
+                onClick={sendMessage}>
+                <span>Send</span>
+              </button>
+            </div>
           </div>
+
         </div>
+
         {/* Chat Contacts:---------- */}
         <div className="col-span-3 border-l-2 border-secondary/20 px-6 pt-10">
           <h1 className="text-xl text-center">Chat Contacts</h1>
           <div className="flex flex-col items-center gap-3 mt-3">
             {images?.map((member) =>
-              <div key={member} className="bg-blue-200 p-2 rounded-lg flex items-center justify-center">
+              <div key={member} className="bg-blue-200 p-2 rounded-lg cursor-pointer flex items-center justify-center">
                 <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
                   <img
                     src={member}
