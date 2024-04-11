@@ -1,16 +1,16 @@
 import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
 import { useAddTaskMutation } from "../../redux/features/tasks/taskApi";
-
+import users from "../../assets/users.json";
 
 const AddTaskModal = ({ isOpen, setIsOpen }) => {
     const { register, handleSubmit, reset } = useForm();
-    const [addTask, {data, error}] = useAddTaskMutation();
+    const [addTask, { data, error }] = useAddTaskMutation();
     console.log('data', data);
     console.log('error', error);
 
     const onSubmit = (data) => {
-        addTask({...data, status: "pending"});
+        addTask({ ...data, status: "pending" });
         onCancel();
     };
 
@@ -60,14 +60,15 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                     />
                 </div>
                 <div className="flex flex-col mb-5">
-                    <label htmlFor="title" className="mb-2">
-                        Assign to
-                    </label>
+                    <label htmlFor="title" className="mb-2">Assign to</label>
                     <select
                         className="w-full rounded-md"
                         id="assignedTo"
                         {...register('assignedTo')}
                     >
+                        {
+                            users?.map((member) => { <option value={member.name}>{member.name}</option> })
+                        }
                         <option value="ACM Anik">ACM Anik</option>
                         <option value="Chandra">Chandra</option>
                         <option value="Ayon">Ayon</option>
@@ -87,9 +88,7 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                     </select>
                 </div>
                 <div className="flex flex-col mb-5">
-                    <label htmlFor="title" className="mb-2">
-                        Priority
-                    </label>
+                    <label htmlFor="title" className="mb-2">Priority</label>
                     <select
                         className="w-full rounded-md"
                         id="priority"
@@ -110,9 +109,7 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                     >
                         Cancel
                     </button>
-                    <button type="submit" className="btn btn-primary ">
-                        submit
-                    </button>
+                    <button type="submit" className="btn btn-primary ">submit</button>
                 </div>
             </form>
         </Modal>

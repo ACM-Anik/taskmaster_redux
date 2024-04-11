@@ -85,7 +85,7 @@ const Chat = () => {
           <div className="grid grid-cols-1 gap-5 mt-10">
             <div className="relative min-h-full  overflow-auto">
               <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
-                <h1>Chatting with Ayon</h1>
+                <h1>Chatting with Member</h1>
                 <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
                   {tasks?.length}
                 </p>
