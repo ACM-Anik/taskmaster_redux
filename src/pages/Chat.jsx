@@ -9,8 +9,8 @@ import { useGetUsersQuery } from '../redux/features/users/usersApi';
 const Chat = () => {
   const [user, setUser] = useState();
   const { data: allUsers } = useGetUsersQuery();
-  console.log('allUsers', allUsers);
-  const [newMessage, setNewMessage] = useState('');
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [newMessage, setNewMessage] = useState([]);
   const [messages, setMessages] = useState([]);
 
   // Setting the user Profile:-
@@ -20,10 +20,11 @@ const Chat = () => {
         setUser(user);
       }
     });
+    setNewMessage('');
   }, []);
 
   useEffect(() => {
-    // if (allUsers && user && user.displayName) {
+    // if (allUsers && user) {
     //   const filteredUser = allUsers.filter(single => {
     //     const normalizedName = single.name.toLowerCase().trim();
     //     const normalizedDisplayName = user.displayName.toLowerCase().trim();
@@ -34,32 +35,51 @@ const Chat = () => {
     // }
   }, [allUsers, user]);
 
+
   const handleMessageChange = (e) => {
-    setNewMessage(e.target.value);
+    const inputValue = e.target.value;
+  
+    if (inputValue === null || undefined) {
+      setButtonDisabled(true);
+    } else {
+      setNewMessage(inputValue);
+      setButtonDisabled(false);
+    }
   };
 
   const sendMessage = () => {
     // Create a message object with sender (assuming current user), timestamp, and content
     const message = {
-      sender: user?.displayName, // Can replace this with the actual sender's name or ID
-      timestamp: new Date().toISOString(), // Current timestamp
+      sender: user?.displayName,
+      timestamp: new Date().toISOString(),
       content: newMessage.trim() // Trim any leading or trailing whitespace from the message content
     };
     // For demonstration purposes, we'll just update the UI by adding the new message to the messages state
-    setMessages([...messages, message]);
-    setNewMessage('');
+
+    if (message.content) {
+      setMessages([...messages, message]);
+      setButtonDisabled(false);
+      setNewMessage('');
+    }else{
+      console.log('67', 67)
+      setButtonDisabled(true);
+      setNewMessage('');
+    }
   };
 
   const handleKeyDown = (event) => {
     // Check if the Enter key is pressed (key code 13)
     if (event.key === 'Enter') {
       sendMessage();
+      setButtonDisabled(true);
+      setNewMessage('');
     }
   };
 
+  // External styles:-
   const containerStyle = {
     height: 'calc(100% - 800px)',
-    /* Other styles can be added here */
+    background: "lightblue",
   };
 
   return (
@@ -110,8 +130,8 @@ const Chat = () => {
                 {allUsers?.length}
               </p>
             </div>
-            <div className="overflow-x-hidden overflow-y-scroll border-2 my-2" style={containerStyle}>
-              {/* Render Chat Messages */}
+            {/* Render Chat Messages */}
+            <div className="overflow-x-hidden overflow-y-scroll border-2 p-2 my-2" style={containerStyle}>
               <div className="">
                 {messages.map((message, index) => (
                   <div key={index} className={`message ${message.sender === user.displayName ? 'sent' : 'received'}`}>
@@ -136,8 +156,11 @@ const Chat = () => {
               onKeyUp={handleKeyDown}
             />
             <button
-              className=" border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl p-2 flex gap-1 text-secondary hover:text-white transition-all"
-              onClick={sendMessage}>
+              className={`border-2 border-secondary/20 rounded-xl p-2 flex gap-1 transition-all cursor-pointer ${!newMessage ? 'bg-gray-300 cursor-not-allowed disabled' : ' text-secondary hover:text-white hover:border-primary hover:bg-primary'}`}
+
+              onClick={sendMessage}
+              disabled={buttonDisabled}
+            >
               <span>Send</span>
             </button>
           </div>
