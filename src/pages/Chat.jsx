@@ -26,12 +26,12 @@ const Chat = () => {
   useEffect(() => {
     if (allUsers && user) {
       // const filteredUser = allUsers.filter(single => {
-        // const normalizedName = single.name.toLowerCase().trim();
-        // const normalizedDisplayName = user.displayName.toLowerCase().trim();
+      // const normalizedName = single.name.toLowerCase().trim();
+      // const normalizedDisplayName = user.displayName.toLowerCase().trim();
 
-        // console.log("filteredUser", filteredUser);
-        // setChattingMember(filteredUser);
-        // return normalizedName === normalizedDisplayName;
+      // console.log("filteredUser", filteredUser);
+      // setChattingMember(filteredUser);
+      // return normalizedName === normalizedDisplayName;
       // });
     }
   }, [allUsers, user]);
@@ -39,7 +39,6 @@ const Chat = () => {
 
   const handleMessageChange = (e) => {
     const inputValue = e.target.value;
-  
     if (inputValue === null || undefined) {
       setButtonDisabled(true);
     } else {
@@ -61,7 +60,7 @@ const Chat = () => {
       setMessages([...messages, message]);
       setButtonDisabled(false);
       setNewMessage('');
-    }else{
+    } else {
       setButtonDisabled(true);
       setNewMessage('');
     }
@@ -76,16 +75,10 @@ const Chat = () => {
     }
   };
 
-  // External styles:-
-  const containerStyle = {
-    height: 'calc(100% - 800px)',
-    background: "lightblue",
-  };
-
   return (
     <>
       <div className="h-screen grid grid-cols-12">
-        <div className="col-span-9 px-10 pt-10">
+        <div className="col-span-9 px-10 pt-10 h-screen">
           <div className="flex justify-between items-center">
             <div>
               <h1 className="font-semibold text-3xl">Chat</h1>
@@ -117,7 +110,7 @@ const Chat = () => {
           </div>
 
           {/* Chatting Page:---------- */}
-          <div className="mt-6 relative overflow-hidden">
+          <div className="mt-6 relative overflow-hidden bg-sky-200">
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-3 rounded-md">
               <div className="flex gap-2">
                 <img className="h-10 w-10 rounded-full overflow-hidden" src={user?.photoURL} alt="profile" />
@@ -131,7 +124,7 @@ const Chat = () => {
               </p>
             </div>
             {/* Render Chat Messages */}
-            <div className="overflow-x-hidden overflow-y-scroll border-2 p-2 my-2" style={containerStyle}>
+            <div className="overflow-x-hidden overflow-y-auto p-2" style={{ height: "calc(100vh - 240px)" }}>
               <div className="">
                 {messages.map((message, index) => (
                   <div key={index} className={`message ${message.sender === user.displayName ? 'sent' : 'received'}`}>
@@ -146,7 +139,7 @@ const Chat = () => {
             </div>
           </div>
           {/* Message Input Box */}
-          <div className="chat-input flex gap-2 z-100">
+          <div className="chat-input flex gap-2 z-100 pt-2">
             <input
               className="rounded-md"
               type="text"
@@ -156,8 +149,7 @@ const Chat = () => {
               onKeyUp={handleKeyDown}
             />
             <button
-              className={`border-2 border-secondary/20 rounded-xl p-2 flex gap-1 transition-all cursor-pointer ${!newMessage ? 'bg-gray-300 cursor-not-allowed disabled' : ' text-secondary hover:text-white hover:border-primary hover:bg-primary'}`}
-
+              className={` rounded-xl p-2 flex gap-1 transition-all cursor-pointer ${!newMessage ? 'bg-gray-300 cursor-not-allowed' : 'border-2 border-secondary/20 text-secondary bg-blue-100 hover:text-white border-primary hover:bg-primary'}`}
               onClick={sendMessage}
               disabled={buttonDisabled}
             >
@@ -179,7 +171,10 @@ const Chat = () => {
                     className="object-cover h-full w-full"
                   />
                 </div>
-                <h1 className="text-lg font-semibold">{member.name}</h1>
+                <div>
+                  <h1 className="text-lg font-semibold">{member.name}</h1>
+                  <p className="text-xs font-thin">{"last seen at 8pm"}</p>
+                </div>
               </div>
             )};
           </div>
