@@ -24,15 +24,16 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    // if (allUsers && user) {
-    //   const filteredUser = allUsers.filter(single => {
-    //     const normalizedName = single.name.toLowerCase().trim();
-    //     const normalizedDisplayName = user.displayName.toLowerCase().trim();
-    //     return normalizedName === normalizedDisplayName;
-    //   });
-    //   console.log("filteredUser", filteredUser);
-    //   setChattingMember(filteredUser);
-    // }
+    if (allUsers && user) {
+      // const filteredUser = allUsers.filter(single => {
+        // const normalizedName = single.name.toLowerCase().trim();
+        // const normalizedDisplayName = user.displayName.toLowerCase().trim();
+
+        // console.log("filteredUser", filteredUser);
+        // setChattingMember(filteredUser);
+        // return normalizedName === normalizedDisplayName;
+      // });
+    }
   }, [allUsers, user]);
 
 
@@ -61,7 +62,6 @@ const Chat = () => {
       setButtonDisabled(false);
       setNewMessage('');
     }else{
-      console.log('67', 67)
       setButtonDisabled(true);
       setNewMessage('');
     }
