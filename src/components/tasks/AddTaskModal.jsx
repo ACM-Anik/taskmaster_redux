@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
 import { useAddTaskMutation } from "../../redux/features/tasks/taskApi";
-import users from "../../assets/users.json";
+import { useGetUsersQuery } from "../../redux/features/users/usersApi";
 
 const AddTaskModal = ({ isOpen, setIsOpen }) => {
+    const { data: allUsers } = useGetUsersQuery();
     const { register, handleSubmit, reset } = useForm();
     const [addTask, { data, error }] = useAddTaskMutation();
     console.log('data', data);
@@ -67,7 +68,7 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
                         {...register('assignedTo')}
                     >
                         {
-                            users?.map((member) => <option key={member?._id} value={member?.name}>{member?.name}</option>)
+                            allUsers?.map((member) => <option key={member?._id} value={member?.name}>{member?.name}</option>)
                         }
                     </select>
                 </div>
