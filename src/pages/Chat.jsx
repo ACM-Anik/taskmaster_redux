@@ -25,14 +25,8 @@ const Chat = () => {
 
   useEffect(() => {
     if (allUsers && user) {
-      // const filteredUser = allUsers.filter(single => {
-      // const normalizedName = single.name.toLowerCase().trim();
-      // const normalizedDisplayName = user.displayName.toLowerCase().trim();
-
-      // console.log("filteredUser", filteredUser);
-      // setChattingMember(filteredUser);
-      // return normalizedName === normalizedDisplayName;
-      // });
+      const filteredUser = allUsers.filter(single => {single.email == user.email});
+      console.log("filteredUser", filteredUser);
     }
   }, [allUsers, user]);
 
@@ -163,7 +157,7 @@ const Chat = () => {
           <h1 className="text-xl text-center">Chat Contacts</h1>
           <div className="flex flex-col items-center gap-3 mt-3">
             {allUsers?.map((member) =>
-              <div key={member?._id} className="bg-blue-200 p-2 rounded-lg cursor-pointer flex items-center justify-center">
+              <div key={member?._id} className="bg-blue-200 p-2 rounded-md cursor-pointer flex items-center w-full">
                 <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
                   <img
                     src={member.photoURL}
