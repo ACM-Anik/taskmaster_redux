@@ -119,9 +119,12 @@ const Chat = () => {
                 :
                 <h1 className="text-lg font-semibold">Select an member to chat</h1>
               }
-              <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                {allUsers?.length}
-              </p>
+              {/* Chatting member Profile Info:----------- */}
+              <div className="flex justify-center items-center cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                </svg>
+              </div>
             </div>
             {/* Rendering Chat Messages */}
             <div className="overflow-x-hidden overflow-y-auto p-2" style={{ height: "calc(100vh - 240px)" }}>
@@ -168,7 +171,7 @@ const Chat = () => {
               <div
                 key={member?._id}
                 onClick={() => handleMember(member)}
-                className="bg-[#D3DDF9] px-2 py-1 rounded-md cursor-pointer flex items-center w-full hover:shadow-lg hover:bg-sky-200"
+                className={`bg-[#D3DDF9] px-2 py-1 rounded-md cursor-pointer flex items-center w-full hover:shadow-lg hover:bg-sky-200 ${chattingUser?.email == member.email ? "bg-sky-200" : ""}`}
               >
                 <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
                   <img
