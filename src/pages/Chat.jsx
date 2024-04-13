@@ -9,11 +9,12 @@ import { useGetUsersQuery } from '../redux/features/users/usersApi';
 const Chat = () => {
   const [user, setUser] = useState();
   const { data: allUsers } = useGetUsersQuery();
+  const [chattingUser, setChattingUser] = useState();
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [newMessage, setNewMessage] = useState([]);
   const [messages, setMessages] = useState([]);
 
-  // Setting the user Profile:-
+  // Setting the user Profile:--
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -23,14 +24,16 @@ const Chat = () => {
     setNewMessage('');
   }, []);
 
+  // Chatting with an user:--
   useEffect(() => {
     if (allUsers && user) {
-      const filteredUser = allUsers.filter(single => {single.email == user.email});
+      const filteredUser = allUsers.filter((single) => single.email == user.email);
       console.log("filteredUser", filteredUser);
+      setChattingUser(filteredUser[0]);
     }
   }, [allUsers, user]);
 
-
+  // Functions for sending messages:--
   const handleMessageChange = (e) => {
     const inputValue = e.target.value;
     if (inputValue === null || undefined) {
@@ -48,7 +51,6 @@ const Chat = () => {
       timestamp: new Date().toISOString(),
       content: newMessage.trim() // Trim any leading or trailing whitespace from the message content
     };
-    // For demonstration purposes, we'll just update the UI by adding the new message to the messages state
 
     if (message.content) {
       setMessages([...messages, message]);
@@ -107,9 +109,9 @@ const Chat = () => {
           <div className="mt-6 relative overflow-hidden bg-sky-200">
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-3 rounded-md">
               <div className="flex gap-2">
-                <img className="h-10 w-10 rounded-full overflow-hidden" src={user?.photoURL} alt="profile" />
+                <img className="h-10 w-10 rounded-full overflow-hidden" src={chattingUser?.photoURL} alt="profile" />
                 <div className="flex flex-col">
-                  <h1 className="text-lg font-semibold">{user?.displayName}</h1>
+                  <h1 className="text-lg font-semibold">{chattingUser?.name}</h1>
                   <p className="text-xs text-gray-500">Online</p>
                 </div>
               </div>
