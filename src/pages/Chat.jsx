@@ -25,13 +25,12 @@ const Chat = () => {
   }, []);
 
   // Chatting with an user:--
-  useEffect(() => {
+  const handleMember = (member) => {
     if (allUsers && user) {
-      const filteredUser = allUsers.filter((single) => single.email == user.email);
-      console.log("filteredUser", filteredUser);
+      const filteredUser = allUsers.filter((single) => single.email == member.email);
       setChattingUser(filteredUser[0]);
     }
-  }, [allUsers, user]);
+  }
 
   // Functions for sending messages:--
   const handleMessageChange = (e) => {
@@ -105,21 +104,26 @@ const Chat = () => {
             </div>
           </div>
 
-          {/* Chatting Page:---------- */}
+          {/* Chatting Page(Interface):---------- */}
           <div className="mt-6 relative overflow-hidden bg-sky-200">
+            {/* Chatting member */}
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-3 rounded-md">
-              <div className="flex gap-2">
-                <img className="h-10 w-10 rounded-full overflow-hidden" src={chattingUser?.photoURL} alt="profile" />
-                <div className="flex flex-col">
-                  <h1 className="text-lg font-semibold">{chattingUser?.name}</h1>
-                  <p className="text-xs text-gray-500">Online</p>
+              {chattingUser ?
+                <div className="flex gap-2">
+                  <img className="h-10 w-10 rounded-full overflow-hidden" src={chattingUser?.photoURL} alt="profile" />
+                  <div className="flex flex-col">
+                    <h1 className="text-lg font-semibold">{chattingUser?.name}</h1>
+                    <p className="text-xs text-gray-500">Online</p>
+                  </div>
                 </div>
-              </div>
+                :
+                <h1 className="text-lg font-semibold">Select an member to chat</h1>
+              }
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
                 {allUsers?.length}
               </p>
             </div>
-            {/* Render Chat Messages */}
+            {/* Rendering Chat Messages */}
             <div className="overflow-x-hidden overflow-y-auto p-2" style={{ height: "calc(100vh - 240px)" }}>
               <div className="">
                 {messages.map((message, index) => (
@@ -135,23 +139,25 @@ const Chat = () => {
             </div>
           </div>
           {/* Message Input Box */}
-          <div className="chat-input flex gap-2 z-100 pt-2">
-            <input
-              className="rounded-md"
-              type="text"
-              placeholder="Type your message..."
-              value={newMessage}
-              onChange={handleMessageChange}
-              onKeyUp={handleKeyDown}
-            />
-            <button
-              className={` rounded-xl p-2 flex gap-1 transition-all cursor-pointer ${!newMessage ? 'bg-gray-300 cursor-not-allowed' : 'border-2 border-secondary/20 text-secondary bg-blue-100 hover:text-white border-primary hover:bg-primary'}`}
-              onClick={sendMessage}
-              disabled={buttonDisabled}
-            >
-              <span>Send</span>
-            </button>
-          </div>
+          {chattingUser &&
+            <div className="chat-input flex gap-2 z-100 pt-2">
+              <input
+                className="rounded-md"
+                type="text"
+                placeholder="Type your message..."
+                value={newMessage}
+                onChange={handleMessageChange}
+                onKeyUp={handleKeyDown}
+              />
+              <button
+                className={` rounded-xl p-2 flex gap-1 transition-all cursor-pointer ${!newMessage ? 'bg-gray-300 cursor-not-allowed text-gray-400' : 'border-2 border-secondary/20 text-secondary bg-blue-100 hover:text-white border-primary hover:bg-primary'}`}
+                onClick={sendMessage}
+                disabled={buttonDisabled}
+              >
+                <span>Send</span>
+              </button>
+            </div>
+          }
         </div>
 
         {/* Chat Contacts:---------- */}
@@ -159,7 +165,11 @@ const Chat = () => {
           <h1 className="text-xl text-center">Chat Contacts</h1>
           <div className="flex flex-col items-center gap-3 mt-3">
             {allUsers?.map((member) =>
-              <div key={member?._id} className="bg-blue-200 p-2 rounded-md cursor-pointer flex items-center w-full">
+              <div
+                key={member?._id}
+                onClick={() => handleMember(member)}
+                className="bg-[#D3DDF9] px-2 py-1 rounded-md cursor-pointer flex items-center w-full hover:shadow-lg hover:bg-sky-200"
+              >
                 <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
                   <img
                     src={member.photoURL}
