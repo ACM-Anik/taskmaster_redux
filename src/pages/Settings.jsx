@@ -53,6 +53,7 @@ const Settings = () => {
 
             </div>
           </div>
+          {/* Settings main interface (Second colspan)-------------*/}
           <div className="grid grid-cols-1 gap-5 mt-10">
             <div className="relative h-screen overflow-y-auto">
               <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
@@ -63,7 +64,7 @@ const Settings = () => {
               </div>
               <div className="space-y-3 overflow-x-hidden overflow-y-auto mb-36">
                 {allUsers?.map((user) =>
-                  <div  key={user._id} className="bg-sky-200 p-3 rounded-lg flex items-center">
+                  <div key={user._id} className="bg-sky-200 p-3 rounded-lg flex items-center cursor-pointer hover:shadow-lg hover:bg-sky-300">
                     <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
                       <img
                         src={user.photoURL}
@@ -81,7 +82,7 @@ const Settings = () => {
             </div>
           </div>
         </div>
-
+        {/* Shortcut Tools (Third col span )----------------*/}
         <div className="col-span-3 border-l-2 border-secondary/20 px-10 pt-10 overflow-hidden">
           <div>
             <h1 className="text-xl">Shortcut Tools</h1>
@@ -91,7 +92,7 @@ const Settings = () => {
                   <img
                     src={user.photoURL}
                     alt="user"
-                    className="object-cover h-full w-full "
+                    className="object-cover h-full w-full"
                   />
                 </div>
               )}
