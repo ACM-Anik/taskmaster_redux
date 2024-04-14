@@ -46,7 +46,7 @@ const Chat = () => {
   const sendMessage = () => {
     // Create a message object with sender (assuming current user), timestamp, and content
     const message = {
-      sender: user?.displayName,
+      sender: `${user?.displayName} `,
       timestamp: new Date().toISOString(),
       content: newMessage.trim() // Trim any leading or trailing whitespace from the message content
     };
@@ -131,7 +131,7 @@ const Chat = () => {
               <div className="">
                 {messages.map((message, index) => (
                   <div key={index} className={`message ${message.sender === user.displayName ? 'sent' : 'received'}`}>
-                    <div className="metadata">
+                    <div className="">
                       <span className="username">{message.sender}</span>
                       <span className="timestamp">{message.timestamp}</span>
                     </div>
@@ -158,6 +158,9 @@ const Chat = () => {
                 disabled={buttonDisabled}
               >
                 <span>Send</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                </svg>
               </button>
             </div>
           }
