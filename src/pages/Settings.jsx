@@ -64,17 +64,30 @@ const Settings = () => {
               </div>
               <div className="space-y-3 overflow-x-hidden overflow-y-auto mb-36">
                 {allUsers?.map((user) =>
-                  <div key={user._id} className="bg-sky-200 p-3 rounded-lg flex items-center cursor-pointer hover:shadow-lg hover:bg-sky-300">
-                    <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
-                      <img
-                        src={user.photoURL}
-                        alt="user"
-                        className="object-cover h-full w-full"
-                      />
+                  <div
+                    key={user._id}
+                    className="bg-sky-200 p-3 rounded-lg flex items-center justify-between cursor-pointer hover:shadow-lg hover:bg-sky-300"
+                  >
+                    <div className="flex items-center">
+                      <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
+                        <img
+                          src={user.photoURL}
+                          alt="user"
+                          className="object-cover h-full w-full"
+                        />
+                      </div>
+                      <div>
+                        <h1 className="text-lg font-semibold">{user.name}</h1>
+                        <h1 className="text-lg">{user.email}</h1>
+                      </div>
                     </div>
-                    <div className="">
-                    <h1 className="text-lg font-semibold">{user.name}</h1>
-                    <h1 className="text-lg">{user.email}</h1>
+                    <div className="flex justify-center gap-3">
+                      <button className="text-lg btn btn-primary">
+                        <span>Update</span>
+                      </button>
+                      <button className="text-lg btn btn-danger">
+                        <span>Delete</span>
+                      </button>
                     </div>
                   </div>
                 )}
