@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import MenuDropdown from '../components/ui/MenuDropdown';
 import auth from '../utils/firebase.config';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useGetUsersQuery} from '../redux/features/users/usersApi';
+import { useGetUsersQuery, useUpdateUserMutation } from '../redux/features/users/usersApi';
 import UserDetailsModal from '../components/users/UserDetailsModal';
 
 const Settings = () => {
@@ -11,6 +11,9 @@ const Settings = () => {
   const [userId, setUserId] = useState(0);
 
   const { data: allUsers } = useGetUsersQuery();
+  const [updateUser, { data: updateData, error: updateError }] = useUpdateUserMutation();
+  console.log('updateData', updateData);
+  console.log('updateError', updateError);
 
   // Setting the user Profile:-
   const [user, setUser] = useState();
@@ -30,6 +33,17 @@ const Settings = () => {
   };
 
 
+  // Update user:-
+  const handleUpdate = (id, name) => {
+    const data = {
+      status: name,
+    };
+    const options = {
+      id: id,
+      data: data,
+    };
+    updateUser(options);
+  };
 
 
   return (
@@ -97,7 +111,7 @@ const Settings = () => {
                       </div>
                     </div>
                     <div className="flex justify-center gap-3">
-                      <button className="btn btn-primary flex flex-row gap-2" title='Update'>
+                      <button className="btn btn-primary flex flex-row gap-2" title='Update' onClick={() => handleUpdate(user._id, user.name)}>
                         <WrenchIcon className="h-6 w-6" />
                       </button>
                       <button className="btn btn-danger flex gap-2" title='Delete'>
