@@ -3,10 +3,15 @@ import { useEffect, useState } from 'react';
 import MenuDropdown from '../components/ui/MenuDropdown';
 import auth from '../utils/firebase.config';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useGetUsersQuery } from '../redux/features/users/usersApi';
+import { useGetUsersQuery} from '../redux/features/users/usersApi';
+import UserDetailsModal from '../components/users/UserDetailsModal';
 
 const Settings = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [userId, setUserId] = useState(0);
+
   const { data: allUsers } = useGetUsersQuery();
+
   // Setting the user Profile:-
   const [user, setUser] = useState();
   useEffect(() => {
@@ -18,9 +23,19 @@ const Settings = () => {
   }, []);
 
 
+  // Open modal:-
+  const handleModal = (id) => {
+    setUserId(id);
+    setIsOpen(!isOpen);
+  };
+
+
+
+
   return (
     <>
       <div className="h-screen overflow-hidden grid grid-cols-12">
+        <UserDetailsModal isOpen={isOpen} setIsOpen={setIsOpen} id={userId}></UserDetailsModal>
         <div className="col-span-9 px-10 pt-10">
           {/* NavBars-------------------- */}
           <div className="flex justify-between items-center">
@@ -101,7 +116,12 @@ const Settings = () => {
             <h1 className="text-xl">Shortcut Tools</h1>
             <div className="flex flex-wrap items-center gap-3 mt-3 overflow-y-auto overflow-x-hidden">
               {allUsers?.map((user) =>
-                <div key={user._id} className="h-10 w-10 m-2 rounded-xl overflow-hidden hover:scale-105 hover:transition-all" title={user?.name}>
+                <div
+                  key={user._id}
+                  className="h-10 w-10 m-2 rounded-xl overflow-hidden hover:scale-105 hover:transition-all" 
+                  title={user?.name}
+                  onClick={() => handleModal(user._id)}
+                >
                   <img
                     src={user.photoURL}
                     alt="user"

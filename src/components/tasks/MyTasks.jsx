@@ -9,20 +9,18 @@ import TaskDetailsModal from './TaskDetailsModal';
 import { useGetTasksQuery, useUpdateTaskMutation } from '../../redux/features/tasks/taskApi';
 
 
-const MyTasks = () => {
-  const {data: dBTasks} = useGetTasksQuery();
+const MyTasks = () => {  
+  const [isOpen, setIsOpen] = useState(false);
+  const [taskId, setTaskId] = useState(0);
+  const {data: dBTasks} = useGetTasksQuery(); //Earlier tasks were coming from redux store but now from Database.
   const { name: userName } = useSelector((state) => state.usersSlice);
   const { tasks, userSpecificTasks } = useSelector((state) => state.tasksSlice);
   const dispatch = useDispatch();
-  // console.log(userName);
-  // console.log(userSpecificTasks);
+
   const [updateTask, { data: updateData, error: updateError }] = useUpdateTaskMutation();  
   console.log('updateData', updateData);
   console.log('updateError', updateError);
-  
-  const [isOpen, setIsOpen] = useState(false);
-  const [taskId, setTaskId] = useState(0);
-  
+
   useEffect(() => {
     dispatch(userTasks({userName, dBTasks}));
   }, [userName, tasks, dispatch, dBTasks]);
