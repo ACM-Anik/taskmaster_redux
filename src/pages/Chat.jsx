@@ -117,14 +117,21 @@ const Chat = () => {
                   </div>
                 </div>
                 :
-                <h1 className="text-lg font-semibold">Select an member to chat</h1>
+                <h1 className="text-lg font-semibold">Please! Select a member(user) to chat.</h1>
               }
               {/* Chatting member Profile Info:----------- */}
-              <div className="flex justify-center items-center cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                </svg>
-              </div>
+              {
+                chattingUser ?
+                  <div className="flex justify-center items-center cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                    </svg>
+                  </div>
+                  :
+                  <div className="flex justify-center items-center cursor-pointer">
+                    <span className="text-sm font-semibold">Total Members: {allUsers?.length}</span>
+                  </div>
+              }
             </div>
             {/* Rendering Chat Messages */}
             <div className="overflow-x-hidden overflow-y-auto p-2" style={{ height: "calc(100vh - 240px)" }}>

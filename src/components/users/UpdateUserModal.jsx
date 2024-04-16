@@ -24,8 +24,6 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
         onCancel();
     };
 
-
-
     const onCancel = () => {
         reset();
         setIsOpen(false);
@@ -37,6 +35,7 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
             setIsOpen={setIsOpen}
             title={"Update Member(User)"}
         >
+            {/* Calling the modal with a form as children:-------- */}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col mb-5">
                     <label htmlFor="title" className="mb-2">
