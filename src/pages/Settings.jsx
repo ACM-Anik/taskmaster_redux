@@ -9,6 +9,7 @@ import UpdateUserModal from '../components/users/UpdateUserModal';
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userId, setUserId] = useState(0);
+  const [modalUser, setModalUser] = useState();
 
   const { data: allUsers } = useGetUsersQuery();
 
@@ -26,16 +27,17 @@ const Settings = () => {
 
 
   // Open Update modal:-
-  const handleModal = (id) => {
+  const handleModal = (id, user) => {
     setUserId(id);
     setIsOpen(!isOpen);
+    setModalUser(user);
   };
 
 
   return (
     <>
       <div className="h-screen overflow-hidden grid grid-cols-12">
-        <UpdateUserModal isOpen={isOpen} setIsOpen={setIsOpen} id={userId}></UpdateUserModal>
+        <UpdateUserModal isOpen={isOpen} setIsOpen={setIsOpen} id={userId} modalUser={modalUser}></UpdateUserModal>
         <div className="col-span-9 px-10 pt-10">
           {/* NavBars-------------------- */}
           <div className="flex justify-between items-center">
@@ -100,7 +102,7 @@ const Settings = () => {
                       <button
                         className="btn btn-primary flex flex-row gap-2"
                         title='Update'
-                        onClick={() => handleModal(user._id)}
+                        onClick={() => handleModal(user._id, user)}
                       >
                         <WrenchIcon className="h-6 w-6" />
                       </button>
