@@ -194,11 +194,11 @@ const Profile = () => {
                 <p className="mb-2"><strong>User Name:</strong> {newName}</p>
                 <p className="mb-2"><strong>User Email:</strong> {email}</p>
                 <div className="flex justify-between">
-                  <button onClick={handleEditClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4 flex gap-2">
+                  <button onClick={handleEditClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4 flex gap-2" title='Update'>
                     <span>Edit Account</span> 
                     <WrenchIcon className="h-6 w-6" />
                   </button>
-                  <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mt-4 flex gap-2">
+                  <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mt-4 flex gap-2"  title='Delete'>
                     <span>Delete Account</span> 
                     <TrashIcon className="h-6 w-6" />
                   </button>

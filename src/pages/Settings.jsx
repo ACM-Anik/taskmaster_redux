@@ -1,4 +1,4 @@
-import { BellIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { BellIcon, MagnifyingGlassIcon, TrashIcon, WrenchIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import MenuDropdown from '../components/ui/MenuDropdown';
 import auth from '../utils/firebase.config';
@@ -66,7 +66,7 @@ const Settings = () => {
                 {allUsers?.map((user) =>
                   <div
                     key={user._id}
-                    className="bg-sky-200 p-3 rounded-lg flex items-center justify-between cursor-pointer hover:shadow-lg hover:bg-sky-300"
+                    className="bg-sky-200 p-3 rounded-lg flex items-center justify-between cursor-pointer hover:shadow-lg hover:transition-all"
                   >
                     <div className="flex items-center">
                       <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
@@ -82,11 +82,11 @@ const Settings = () => {
                       </div>
                     </div>
                     <div className="flex justify-center gap-3">
-                      <button className="text-lg btn btn-primary">
-                        <span>Update</span>
+                      <button className="btn btn-primary flex flex-row gap-2" title='Update'>
+                        <WrenchIcon className="h-6 w-6" />
                       </button>
-                      <button className="text-lg btn btn-danger">
-                        <span>Delete</span>
+                      <button className="btn btn-danger flex gap-2" title='Delete'>
+                        <TrashIcon className="h-6 w-6 " />
                       </button>
                     </div>
                   </div>
@@ -101,7 +101,7 @@ const Settings = () => {
             <h1 className="text-xl">Shortcut Tools</h1>
             <div className="flex flex-wrap items-center gap-3 mt-3 overflow-y-auto overflow-x-hidden">
               {allUsers?.map((user) =>
-                <div key={user._id} className="h-10 w-10 m-2 rounded-xl overflow-hidden">
+                <div key={user._id} className="h-10 w-10 m-2 rounded-xl overflow-hidden hover:scale-105 hover:transition-all" title={user?.name}>
                   <img
                     src={user.photoURL}
                     alt="user"
