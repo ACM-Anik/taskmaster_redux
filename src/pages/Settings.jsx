@@ -3,17 +3,15 @@ import { useEffect, useState } from 'react';
 import MenuDropdown from '../components/ui/MenuDropdown';
 import auth from '../utils/firebase.config';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useGetUsersQuery, useUpdateUserMutation } from '../redux/features/users/usersApi';
-import UserDetailsModal from '../components/users/UserDetailsModal';
+import { useGetUsersQuery } from '../redux/features/users/usersApi';
+import UpdateUserModal from '../components/users/UpdateUserModal';
 
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userId, setUserId] = useState(0);
 
   const { data: allUsers } = useGetUsersQuery();
-  const [updateUser, { data: updateData, error: updateError }] = useUpdateUserMutation();
-  console.log('updateData', updateData);
-  console.log('updateError', updateError);
+
 
   // Setting the user Profile:-
   const [user, setUser] = useState();
@@ -26,30 +24,18 @@ const Settings = () => {
   }, []);
 
 
-  // Open modal:-
+
+  // Open Update modal:-
   const handleModal = (id) => {
     setUserId(id);
     setIsOpen(!isOpen);
   };
 
 
-  // Update user:-
-  const handleUpdate = (id, name) => {
-    const data = {
-      status: name,
-    };
-    const options = {
-      id: id,
-      data: data,
-    };
-    updateUser(options);
-  };
-
-
   return (
     <>
       <div className="h-screen overflow-hidden grid grid-cols-12">
-        <UserDetailsModal isOpen={isOpen} setIsOpen={setIsOpen} id={userId}></UserDetailsModal>
+        <UpdateUserModal isOpen={isOpen} setIsOpen={setIsOpen} id={userId}></UpdateUserModal>
         <div className="col-span-9 px-10 pt-10">
           {/* NavBars-------------------- */}
           <div className="flex justify-between items-center">
@@ -111,10 +97,16 @@ const Settings = () => {
                       </div>
                     </div>
                     <div className="flex justify-center gap-3">
-                      <button className="btn btn-primary flex flex-row gap-2" title='Update' onClick={() => handleUpdate(user._id, user.name)}>
+                      <button
+                        className="btn btn-primary flex flex-row gap-2"
+                        title='Update'
+                        onClick={() => handleModal(user._id)}
+                      >
                         <WrenchIcon className="h-6 w-6" />
                       </button>
-                      <button className="btn btn-danger flex gap-2" title='Delete'>
+                      <button
+                        className="btn btn-danger flex gap-2"
+                        title='Delete'>
                         <TrashIcon className="h-6 w-6 " />
                       </button>
                     </div>
@@ -132,9 +124,8 @@ const Settings = () => {
               {allUsers?.map((user) =>
                 <div
                   key={user._id}
-                  className="h-10 w-10 m-2 rounded-xl overflow-hidden hover:scale-105 hover:transition-all" 
+                  className="h-10 w-10 m-2 rounded-xl overflow-hidden hover:scale-105 hover:transition-all"
                   title={user?.name}
-                  onClick={() => handleModal(user._id)}
                 >
                   <img
                     src={user.photoURL}
