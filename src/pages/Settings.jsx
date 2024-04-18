@@ -5,14 +5,13 @@ import auth from '../utils/firebase.config';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useGetUsersQuery } from '../redux/features/users/usersApi';
 import UpdateUserModal from '../components/users/UpdateUserModal';
+import Swal from 'sweetalert2';
 
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userId, setUserId] = useState(0);
   const [modalUser, setModalUser] = useState();
-
   const { data: allUsers } = useGetUsersQuery();
-
 
   // Setting the user Profile:-
   const [user, setUser] = useState();
@@ -24,8 +23,6 @@ const Settings = () => {
     });
   }, []);
 
-
-
   // Open Update modal:-
   const handleModal = (id, user) => {
     setUserId(id);
@@ -33,6 +30,26 @@ const Settings = () => {
     setModalUser(user);
   };
 
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete the user!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "User has been deleted.",
+          icon: "success"
+        });
+        console.log('id', id);
+      }
+    });
+  }
 
   return (
     <>
@@ -108,7 +125,9 @@ const Settings = () => {
                       </button>
                       <button
                         className="btn btn-danger flex gap-2"
-                        title='Delete'>
+                        title='Delete'
+                        onClick={()=> handleDelete(user._id)}
+                        >
                         <TrashIcon className="h-6 w-6 " />
                       </button>
                     </div>

@@ -4,7 +4,6 @@ import { useUpdateUserMutation } from "../../redux/features/users/usersApi";
 
 const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
     const { register, handleSubmit, reset } = useForm();
-
     const [updateUser, { data: updateData, error: updateError }] = useUpdateUserMutation();
     console.log('updateData', updateData);
     console.log('updateError', updateError);
@@ -57,6 +56,7 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
                         className="w-full rounded-md"
                         type="email"
                         id="email"
+                        disabled
                         value={modalUser?.email}
                         {...register('email')}
                     />
