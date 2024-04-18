@@ -3,15 +3,21 @@ import { useEffect, useState } from 'react';
 import MenuDropdown from '../components/ui/MenuDropdown';
 import auth from '../utils/firebase.config';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useGetUsersQuery } from '../redux/features/users/usersApi';
+import { useGetUsersQuery, useRemoveUserMutation } from '../redux/features/users/usersApi';
 import UpdateUserModal from '../components/users/UpdateUserModal';
 import Swal from 'sweetalert2';
+
+const admin = "Anik C Mojumder";
 
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userId, setUserId] = useState(0);
   const [modalUser, setModalUser] = useState();
   const { data: allUsers } = useGetUsersQuery();
+  const [deleteUser, { data: deleteData, error: deleteError }] = useRemoveUserMutation();
+  console.log('deleteData', deleteData);
+  console.log('deleteError', deleteError);
+
 
   // Setting the user Profile:-
   const [user, setUser] = useState();
@@ -23,14 +29,15 @@ const Settings = () => {
     });
   }, []);
 
-  // Open Update modal:-
+  // Open Update modal:--
   const handleModal = (id, user) => {
     setUserId(id);
     setIsOpen(!isOpen);
     setModalUser(user);
   };
 
-  const handleDelete = (id) => {
+  // Delete user:-- 
+  const handleDelete = (member) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -41,15 +48,33 @@ const Settings = () => {
       confirmButtonText: "Yes, delete the user!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "User has been deleted.",
-          icon: "success"
-        });
-        console.log('id', id);
+        console.log('member._id', member._id);
+        // Checking the Admin:-
+        if(admin === user?.email){
+          deleteUser(member._id);
+          if(deleteData){
+            Swal.fire({
+              title: "Deleted!",
+              text: "Member(user) has been deleted.",
+              icon: "success"
+            });
+          }else{
+            Swal.fire({
+              title: "Ops!",
+              text: "Member(user) has not been deleted due to server error.",
+              icon: "fail"
+            });
+          }
+        }else{
+          Swal.fire({
+            title: "Sorry!",
+            text: "Only Admin can remove(delete) any member.",
+            icon: "error"
+          });
+        }
       }
     });
-  }
+  };
 
   return (
     <>
@@ -97,36 +122,36 @@ const Settings = () => {
                 </p>
               </div>
               <div className="space-y-3 overflow-x-hidden overflow-y-auto mb-36">
-                {allUsers?.map((user) =>
+                {allUsers?.map((member) =>
                   <div
-                    key={user._id}
+                    key={member._id}
                     className="bg-sky-200 p-3 rounded-lg flex items-center justify-between cursor-pointer hover:shadow-lg hover:transition-all"
                   >
                     <div className="flex items-center">
                       <div className="h-10 w-10 m-2 rounded-xl overflow-hidden">
                         <img
-                          src={user.photoURL}
-                          alt="user"
+                          src={member.photoURL}
+                          alt="member"
                           className="object-cover h-full w-full"
                         />
                       </div>
                       <div>
-                        <h1 className="text-lg font-semibold">{user.name}</h1>
-                        <h1 className="text-lg">{user.email}</h1>
+                        <h1 className="text-lg font-semibold">{member.name}</h1>
+                        <h1 className="text-lg">{member.email}</h1>
                       </div>
                     </div>
                     <div className="flex justify-center gap-3">
                       <button
                         className="btn btn-primary flex flex-row gap-2"
                         title='Update'
-                        onClick={() => handleModal(user._id, user)}
+                        onClick={() => handleModal(member._id, member)}
                       >
                         <WrenchIcon className="h-6 w-6" />
                       </button>
                       <button
                         className="btn btn-danger flex gap-2"
                         title='Delete'
-                        onClick={()=> handleDelete(user._id)}
+                        onClick={()=> handleDelete(member)}
                         >
                         <TrashIcon className="h-6 w-6 " />
                       </button>
@@ -142,15 +167,15 @@ const Settings = () => {
           <div>
             <h1 className="text-xl">Shortcut Tools</h1>
             <div className="flex flex-wrap items-center gap-3 mt-3 overflow-y-auto overflow-x-hidden">
-              {allUsers?.map((user) =>
+              {allUsers?.map((member) =>
                 <div
-                  key={user._id}
+                  key={member._id}
                   className="h-10 w-10 m-2 rounded-xl overflow-hidden hover:scale-105 hover:transition-all"
-                  title={user?.name}
+                  title={member?.name}
                 >
                   <img
-                    src={user.photoURL}
-                    alt="user"
+                    src={member.photoURL}
+                    alt="member"
                     className="object-cover h-full w-full"
                   />
                 </div>
