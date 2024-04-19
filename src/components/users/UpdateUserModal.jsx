@@ -10,16 +10,16 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
 
     // Update user:-
     const onSubmit = (data) => {
-        console.log('data', data);
+        const lowerCaseRole = data.role.toLowerCase();
 
         const newData = {
-            role: data.role,
+            role: lowerCaseRole,
         };
         const options = {
             id: id,
             data: newData,
         };
-        // updateUser(options);
+        updateUser(options);
         onCancel();
     };
 
@@ -34,7 +34,7 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
             setIsOpen={setIsOpen}
             title={"Update Member(User)"}
         >
-            <div className="flex justify-between items-center gap-3">
+            <div className="flex justify-start items-center gap-3">
                 <div className="flex flex-col mb-5 mt-5">
                     <div className="h-28 w-28 m-2 rounded-xl overflow-hidden">
                         <img
@@ -46,10 +46,10 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
                 </div>
                 <div className="flex flex-col mb-5">
                     <label htmlFor="title" className="mb-2">
-                        Name: {modalUser?.name}
+                        Name: <span className="font-semibold">{modalUser?.name}</span>
                     </label>
                     <label htmlFor="title" className="mb-2">
-                        Email: {modalUser?.email}
+                        Email: <span className="font-semibold">{modalUser?.email}</span>
                     </label>
                 </div>
             </div>

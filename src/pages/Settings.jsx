@@ -31,9 +31,17 @@ const Settings = () => {
 
   // Open Update modal:--
   const handleModal = (id, user) => {
-    setUserId(id);
-    setIsOpen(!isOpen);
-    setModalUser(user);
+    if (admin === user.email) {
+      setUserId(id);
+      setIsOpen(!isOpen);
+      setModalUser(user);
+    }else{
+      Swal.fire({
+        title: "Sorry!",
+        text: "Only Admin can update any member.",
+        icon: "error"
+      });
+    }
   };
 
   // Delete user:-- 
@@ -49,23 +57,23 @@ const Settings = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // Checking the Admin:-
-        if(admin === user?.email){
+        if (admin === user?.email) {
           deleteUser(member._id);
           console.log('Admin checked', member._id);
-          if(deleteData){
+          if (deleteData) {
             Swal.fire({
               title: "Deleted!",
               text: "Member(user) has been deleted.",
               icon: "success"
             });
-          }else{
+          } else {
             Swal.fire({
               title: "Ops!",
               text: "Member(user) has not been deleted due to server error.",
               icon: "fail"
             });
           }
-        }else{
+        } else {
           Swal.fire({
             title: "Sorry!",
             text: "Only Admin can remove(delete) any member.",
@@ -151,8 +159,8 @@ const Settings = () => {
                       <button
                         className="btn btn-danger flex gap-2"
                         title='Delete'
-                        onClick={()=> handleDelete(member)}
-                        >
+                        onClick={() => handleDelete(member)}
+                      >
                         <TrashIcon className="h-6 w-6 " />
                       </button>
                     </div>
