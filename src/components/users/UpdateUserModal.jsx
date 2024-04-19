@@ -34,12 +34,8 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
             setIsOpen={setIsOpen}
             title={"Update Member(User)"}
         >
-            {/* Calling the modal with a form as children:-------- */}
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex justify-between items-center gap-3">
                 <div className="flex flex-col mb-5 mt-5">
-                    <label htmlFor="title" className="mb-2">
-                        PhotoURL
-                    </label>
                     <div className="h-28 w-28 m-2 rounded-xl overflow-hidden">
                         <img
                             src={modalUser?.photoURL}
@@ -50,28 +46,15 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
                 </div>
                 <div className="flex flex-col mb-5">
                     <label htmlFor="title" className="mb-2">
-                        Name
+                        Name: {modalUser?.name}
                     </label>
-                    <input
-                        className="w-full rounded-md"
-                        type="text"
-                        id="name"
-                        {...register('name')}
-                        defaultValue={modalUser?.name}
-                    />
-                </div>
-                <div className="flex flex-col mb-5">
                     <label htmlFor="title" className="mb-2">
-                        Email
+                        Email: {modalUser?.email}
                     </label>
-                    <input
-                        className="w-full rounded-md"
-                        type="text"
-                        id="email"
-                        value={modalUser?.email}
-                        {...register('email')}
-                    />
                 </div>
+            </div>
+            {/* Calling the modal with a form as children:-------- */}
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col mb-5">
                     <label htmlFor="title" className="mb-2">
                         Role
@@ -81,6 +64,7 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
                         type="text"
                         id="role"
                         {...register('role')}
+                        placeholder={`${modalUser.role ? modalUser.role : "Not has any role yet!"}`}
                         defaultValue={modalUser?.role}
                     />
                 </div>
