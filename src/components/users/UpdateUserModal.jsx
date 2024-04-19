@@ -13,13 +13,13 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
         console.log('data', data);
 
         const newData = {
-            name: data.name,
+            role: data.role,
         };
         const options = {
             id: id,
             data: newData,
         };
-        updateUser(options);
+        // updateUser(options);
         onCancel();
     };
 
@@ -36,6 +36,18 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
         >
             {/* Calling the modal with a form as children:-------- */}
             <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="flex flex-col mb-5 mt-5">
+                    <label htmlFor="title" className="mb-2">
+                        PhotoURL
+                    </label>
+                    <div className="h-28 w-28 m-2 rounded-xl overflow-hidden">
+                        <img
+                            src={modalUser?.photoURL}
+                            alt="member photo"
+                            className="object-cover h-full w-full"
+                        />
+                    </div>
+                </div>
                 <div className="flex flex-col mb-5">
                     <label htmlFor="title" className="mb-2">
                         Name
@@ -54,23 +66,22 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
                     </label>
                     <input
                         className="w-full rounded-md"
-                        type="email"
+                        type="text"
                         id="email"
-                        disabled
                         value={modalUser?.email}
                         {...register('email')}
                     />
                 </div>
                 <div className="flex flex-col mb-5">
                     <label htmlFor="title" className="mb-2">
-                        PhotoURL
+                        Role
                     </label>
                     <input
                         className="w-full rounded-md"
                         type="text"
-                        id="photoURL"
-                        {...register('photoURL')}
-                        defaultValue={modalUser?.photoURL}
+                        id="role"
+                        {...register('role')}
+                        defaultValue={modalUser?.role}
                     />
                 </div>
                 <div className="flex gap-3 justify-end">

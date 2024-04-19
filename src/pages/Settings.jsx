@@ -7,8 +7,8 @@ import { useGetUsersQuery, useRemoveUserMutation } from '../redux/features/users
 import UpdateUserModal from '../components/users/UpdateUserModal';
 import Swal from 'sweetalert2';
 
-const admin = "Anik C Mojumder";
 
+const admin = "aaaaaaaanikmojumder@gmail.com";
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userId, setUserId] = useState(0);
@@ -45,13 +45,13 @@ const Settings = () => {
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete the user!"
+      confirmButtonText: "Yes, delete the Member!"
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('member._id', member._id);
         // Checking the Admin:-
         if(admin === user?.email){
           deleteUser(member._id);
+          console.log('Admin checked', member._id);
           if(deleteData){
             Swal.fire({
               title: "Deleted!",
