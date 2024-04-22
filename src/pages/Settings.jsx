@@ -116,7 +116,6 @@ const Settings = () => {
                   />
                 </div>
               </MenuDropdown>
-
             </div>
           </div>
           {/* Settings main interface (Second colspan)-------------*/}
