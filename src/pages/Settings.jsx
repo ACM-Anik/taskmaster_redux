@@ -35,7 +35,7 @@ const Settings = () => {
       setUserId(id);
       setIsOpen(!isOpen);
       setModalUser(user);
-    }else{
+    } else {
       Swal.fire({
         title: "Sorry!",
         text: "Only Admin can update any member.",
@@ -46,20 +46,19 @@ const Settings = () => {
 
   // Delete user:-- 
   const handleDelete = (member) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete the Member!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Checking the Admin:-
-        if (admin === user?.email) {
+    // Checking the Admin:-
+    if (admin === user?.email) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete the Member!"
+      }).then((result) => {
+        if (result.isConfirmed) {
           deleteUser(member._id);
-          console.log('Admin checked', member._id);
           if (deleteData) {
             Swal.fire({
               title: "Deleted!",
@@ -73,15 +72,15 @@ const Settings = () => {
               icon: "fail"
             });
           }
-        } else {
-          Swal.fire({
-            title: "Sorry!",
-            text: "Only Admin can remove(delete) any member.",
-            icon: "error"
-          });
         }
-      }
-    });
+      });
+    } else {
+      Swal.fire({
+        title: "Sorry!",
+        text: "Only Admin can remove(delete) any member.",
+        icon: "error"
+      });
+    }
   };
 
   return (
@@ -144,8 +143,11 @@ const Settings = () => {
                         />
                       </div>
                       <div>
-                        <h1 className="text-lg font-semibold">{member.name}</h1>
-                        <h1 className="text-lg">{member.email}</h1>
+                        <div className="flex items-center gap-1">
+                          <h1 className="text-lg font-semibold">{member?.name}</h1>
+                          <h1 className="text-xs uppercase bg-sky-100 p-1 rounded">{member.role ? member.role : "member"}</h1>
+                        </div>
+                        <h1 className="text-lg">{member?.email}</h1>
                       </div>
                     </div>
                     <div className="flex justify-center gap-3">

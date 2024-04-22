@@ -64,7 +64,7 @@ const UpdateUserModal = ({ isOpen, setIsOpen, id, modalUser }) => {
                         type="text"
                         id="role"
                         {...register('role')}
-                        placeholder={`${modalUser.role ? modalUser.role : "Not has any role yet!"}`}
+                        placeholder={`${modalUser?.role ? modalUser.role : "Not has any role yet!"}`}
                         defaultValue={modalUser?.role}
                     />
                 </div>
