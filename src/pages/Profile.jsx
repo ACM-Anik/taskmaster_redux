@@ -3,14 +3,15 @@ import { EmailAuthProvider, deleteUser, onAuthStateChanged, reauthenticateWithCr
 import { useDispatch } from 'react-redux';
 import auth from '../utils/firebase.config';
 import Swal from 'sweetalert2';
-import { BellIcon, MagnifyingGlassIcon, TrashIcon, WrenchIcon } from '@heroicons/react/24/outline';
-import MenuDropdown from '../components/ui/MenuDropdown';
+import { TrashIcon, WrenchIcon } from '@heroicons/react/24/outline';
+import Navbar from '../components/layouts/Navbar';
+import { setUser } from '../redux/features/users/usersSlice';
 
 
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
+  // const [, setUser] = useState();
   const [newName, setNewName] = useState();
   const [newPhoto, setNewPhoto] = useState();
   const [email, setEmail] = useState();
@@ -19,13 +20,19 @@ const Profile = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user);
+        // setUser(user);
         setNewName(user.displayName);
         setNewPhoto(user.photoURL);
         setEmail(user.email);
+        dispatch(
+          setUser({
+            name: user.displayName,
+            email: user.email,
+          })
+        );
       }
     });
-  }, []);
+  }, [dispatch]);
 
   // Edit the profile:-
   const [editing, setEditing] = useState(false);
@@ -126,7 +133,7 @@ const Profile = () => {
     <>
       <div className="h-screen">
         <div className="px-10 pt-10">
-          <div className="flex justify-between items-center">
+          {/* <div className="flex justify-between items-center">
             <div>
               <h1 className="font-semibold text-3xl">Profile</h1>
             </div>
@@ -154,7 +161,8 @@ const Profile = () => {
                 </div>
               </MenuDropdown>
             </div>
-          </div>
+          </div> */}
+          <Navbar title="Profile"></Navbar>
 
           <div className="max-w-lg m-auto my-8 p-8 bg-[#D3DDF9] rounded-lg shadow-md">
             <div className="w-full h-full bg-cover bg-center opacity-10 absolute top-0 left-0 -z-10" style={{ backgroundImage: `url(${newPhoto})` }}></div>
