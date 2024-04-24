@@ -12,7 +12,6 @@ import { setUser } from '../redux/features/users/usersSlice';
 const Profile = () => {
   const dispatch = useDispatch();
   // const [, setUser] = useState();
-  const [saving, setSaving] = useState(false);
   // const [newChangedName, setNewChangedName] = useState("");
   // const [newChangedPhoto, setNewChangedPhoto] = useState("");
   const [newName, setNewName] = useState("");
@@ -96,8 +95,8 @@ const Profile = () => {
   const handleChange = (e) => {
     const inputTitle = e.target.name;
     const inputValue = e.target.value;
-    console.log('inputTitle=', inputTitle);
-    console.log('inputValue=', inputValue);
+    // console.log('inputTitle=', inputTitle);
+    // console.log('inputValue=', inputValue);
 
     if (inputTitle === "name") {
       setNewName(inputValue);
@@ -120,43 +119,38 @@ const Profile = () => {
 
   const handleEditClick = () => {
     setEditing(true);
-    setSaving(true);
-    console.log('saving - handle edit- 117', saving);
   };
 
-  // const handleSetSave = () => {
-  //   console.log('saving-set- 121', saving);
+  
+  const handleSetClick = () => {
+    console.log('newName-126', newName)
+    // updateProfile(auth.currentUser, {
+    //   displayName: newName,
+    // });
 
-  //   if (!saving) {
-  //     setNewName(newChangedName);
-  //     setNewPhoto(newChangedPhoto);
-  //     console.log("newname-125", newName);
-  //   }
-
-  //   if (!saving) {
-  //     updateProfile(auth.currentUser, {
-  //       displayName: newName,
-  //       photoURL: newPhoto,
-  //     });
-
-  //     dispatch(
-  //       setUser({
-  //         name: newChangedName,
-  //         email: email,
-  //       })
-  //     );
-  //   }
-  // };
-
-  const handleSaveClick = () => {
-    setEditing(false);
-    setSaving(false);
     // handleSetSave();
     // dispatch(
     //   setUser({
     //     name: newName,
     //   })
     // );
+  };
+  
+  const handleSaveClick = () => {
+    setEditing(false);
+
+    // setNewName(newChangedName);
+    // updateProfile(auth.currentUser, {
+    //   displayName: newName,
+    // });
+
+    // handleSetSave();
+    // dispatch(
+    //   setUser({
+    //     name: newName,
+    //   })
+    // );
+    handleSetClick();
   };
   const handleCancelClick = () => {
     setEditing(false);
