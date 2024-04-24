@@ -12,11 +12,13 @@ import { setUser } from '../redux/features/users/usersSlice';
 const Profile = () => {
   const dispatch = useDispatch();
   // const [, setUser] = useState();
-  const [newName, setNewName] = useState();
-  const [newPhoto, setNewPhoto] = useState();
-  const [email, setEmail] = useState();
-  
-  
+  const [saving, setSaving] = useState(false);
+  // const [newChangedName, setNewChangedName] = useState("");
+  // const [newChangedPhoto, setNewChangedPhoto] = useState("");
+  const [newName, setNewName] = useState("");
+  const [newPhoto, setNewPhoto] = useState("");
+  const [email, setEmail] = useState("");
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -24,48 +26,9 @@ const Profile = () => {
         setNewName(user.displayName);
         setNewPhoto(user.photoURL);
         setEmail(user.email);
-        dispatch(
-          setUser({
-            name: user.displayName,
-            email: user.email,
-          })
-        );
       }
     });
   }, [dispatch]);
-
-  // Edit the profile:-
-  const [editing, setEditing] = useState(false);
-  const handleEditClick = () => {
-    setEditing(true);
-  };
-  const handleSaveClick = () => {
-    setEditing(false);
-  };
-  const handleCancelClick = () => {
-    setEditing(false);
-  };
-
-  // Changing the name, email, PhotoURL:-
-  const handleChange = (e) => {
-    const inputName = e.target.name;
-    const value = e.target.value;
-    // console.log('title=', inputName);
-    // console.log('value=', value);
-
-    if (inputName === "name") {
-      updateProfile(auth.currentUser, {
-        displayName: value,
-      });
-      setNewName(value);
-    }
-    if (inputName === "photo") {
-      updateProfile(auth.currentUser, {
-        photoURL: value,
-      });
-      setNewPhoto(value);
-    }
-  };
 
   // Delete user account:--
   const handleDelete = () => {
@@ -129,39 +92,82 @@ const Profile = () => {
   };
 
 
+  // Changing the name, email, PhotoURL:-
+  const handleChange = (e) => {
+    const inputTitle = e.target.name;
+    const inputValue = e.target.value;
+    console.log('inputTitle=', inputTitle);
+    console.log('inputValue=', inputValue);
+
+    if (inputTitle === "name") {
+      setNewName(inputValue);
+      // setNewChangedName(inputValue);
+      updateProfile(auth.currentUser, {
+        displayName: inputValue,
+      });
+    }
+    if (inputTitle === "photo") {
+      setNewPhoto(inputValue);
+      // setNewChangedPhoto(inputValue);
+      updateProfile(auth.currentUser, {
+        photoURL: inputValue,
+      });
+    }
+  };
+
+  // Edit the profile:-
+  const [editing, setEditing] = useState(false);
+
+  const handleEditClick = () => {
+    setEditing(true);
+    setSaving(true);
+    console.log('saving - handle edit- 117', saving);
+  };
+
+  // const handleSetSave = () => {
+  //   console.log('saving-set- 121', saving);
+
+  //   if (!saving) {
+  //     setNewName(newChangedName);
+  //     setNewPhoto(newChangedPhoto);
+  //     console.log("newname-125", newName);
+  //   }
+
+  //   if (!saving) {
+  //     updateProfile(auth.currentUser, {
+  //       displayName: newName,
+  //       photoURL: newPhoto,
+  //     });
+
+  //     dispatch(
+  //       setUser({
+  //         name: newChangedName,
+  //         email: email,
+  //       })
+  //     );
+  //   }
+  // };
+
+  const handleSaveClick = () => {
+    setEditing(false);
+    setSaving(false);
+    // handleSetSave();
+    // dispatch(
+    //   setUser({
+    //     name: newName,
+    //   })
+    // );
+  };
+  const handleCancelClick = () => {
+    setEditing(false);
+  };
+
+
   return (
     <>
       <div className="h-screen">
         <div className="px-10 pt-10">
-          {/* <div className="flex justify-between items-center">
-            <div>
-              <h1 className="font-semibold text-3xl">Profile</h1>
-            </div>
-
-            <div className="flex gap-5">
-              <button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl h-10 w-10  grid place-content-center text-secondary hover:text-white transition-all">
-                <MagnifyingGlassIcon className="h-6 w-6" />
-              </button>
-              <button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl h-10 w-10 grid place-content-center text-secondary hover:text-white transition-all">
-                <BellIcon className="h-6 w-6" />
-              </button>
-
-              <MenuDropdown>
-                <div className="h-10 w-10 rounded-xl overflow-hidden">
-                  <img
-                    title={user?.displayName}
-                    src={user?.photoURL ?
-                      user.photoURL
-                      :
-                      "https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=644&q=80"
-                    }
-                    alt="profile"
-                    className="object-cover h-full w-full "
-                  />
-                </div>
-              </MenuDropdown>
-            </div>
-          </div> */}
+          {/* Navbar-------------- */}
           <Navbar title="Profile"></Navbar>
 
           <div className="max-w-lg m-auto my-8 p-8 bg-[#D3DDF9] rounded-lg shadow-md">
@@ -176,7 +182,7 @@ const Profile = () => {
                 />
                 <label className="block mb-2">Name:</label>
                 <input type="text" name="name"
-                  value={newName}
+                  defaultValue={newName}
                   onChange={handleChange}
                   className="w-full border rounded-md px-4 py-2 mb-4"
                 />
@@ -188,10 +194,10 @@ const Profile = () => {
                 />
 
                 <div className="flex justify-between">
-                  <button onClick={handleSaveClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mr-4">
+                  <button onClick={() => handleSaveClick()} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mr-4">
                     Save
                   </button>
-                  <button onClick={handleCancelClick} className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md">
+                  <button onClick={() => handleCancelClick()} className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md">
                     Cancel
                   </button>
                 </div>
@@ -202,12 +208,12 @@ const Profile = () => {
                 <p className="mb-2"><strong>User Name:</strong> {newName}</p>
                 <p className="mb-2"><strong>User Email:</strong> {email}</p>
                 <div className="flex justify-between">
-                  <button onClick={handleEditClick} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4 flex gap-2" title='Update'>
-                    <span>Edit Account</span> 
+                  <button onClick={() => handleEditClick()} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4 flex gap-2" title='Update'>
+                    <span>Edit Account</span>
                     <WrenchIcon className="h-6 w-6" />
                   </button>
-                  <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mt-4 flex gap-2"  title='Delete'>
-                    <span>Delete Account</span> 
+                  <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mt-4 flex gap-2" title='Delete'>
+                    <span>Delete Account</span>
                     <TrashIcon className="h-6 w-6" />
                   </button>
                 </div>

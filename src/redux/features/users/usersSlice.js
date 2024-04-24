@@ -29,7 +29,7 @@ export const loginUser = createAsyncThunk("usersSlice/loginUser", async ({ email
         .then((userCredential) => {
             const user = userCredential.user;
             // ...
-            console.log('user-32line', user);
+            console.log('userLogin-line32', user);
         })
         .catch((error) => {
             const errorCode = error.code;
