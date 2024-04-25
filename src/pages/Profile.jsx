@@ -123,12 +123,11 @@ const Profile = () => {
 
   
   const handleSetClick = () => {
-    console.log('newName-126', newName)
+    console.log('newName-126', newName);
     // updateProfile(auth.currentUser, {
     //   displayName: newName,
     // });
 
-    // handleSetSave();
     // dispatch(
     //   setUser({
     //     name: newName,
@@ -144,12 +143,12 @@ const Profile = () => {
     //   displayName: newName,
     // });
 
-    // handleSetSave();
-    // dispatch(
-    //   setUser({
-    //     name: newName,
-    //   })
-    // );
+    dispatch(
+      setUser({
+        name: newName,
+        email: email,
+      })
+    );
     handleSetClick();
   };
   const handleCancelClick = () => {
