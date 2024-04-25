@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import auth from "../../../utils/firebase.config";
+// import toast from 'react-hot-toast';
 
 const initialState = {
     name: "",
@@ -25,20 +26,21 @@ export const createUser = createAsyncThunk("usersSlice/createUser", async ({ ema
 
 // LoginUser Thunk:---
 export const loginUser = createAsyncThunk("usersSlice/loginUser", async ({ email, password }) => {
-    const data = await signInWithEmailAndPassword(auth, email, password);
-    //     .then((userCredential) => {
-    //         const user = userCredential.user;
-    //         // ...
-    //         console.log('userLogin-line32', user);
-    //     })
-    //     .catch((error) => {
-    //         const errorCode = error.code;
-    //         const errorMessage = error.message;
-    //         console.log('errorCode', errorCode);
-    //         console.log('errorMessage', errorMessage);
-    //     });
-    // console.log('data userSlice - 40', data)
-
+    const data = await signInWithEmailAndPassword(auth, email, password)
+    // .then((userCredential) => {
+    //     const user = userCredential.user;
+    //     console.log('userLogin-line32', user);
+    // })
+    // .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     console.log('errorCode', errorCode);
+    //     console.log('errorMessage', errorMessage);
+        
+        
+    // });
+    // toast.error();
+    console.log('data - UserSlice43', data);
     return {
         email: data.user.email,
         name: data.user.displayName,
@@ -118,8 +120,8 @@ const usersSlice = createSlice({
             .addCase(loginUser.fulfilled, (state, { payload }) => {
                 state.isLoading = false;
                 state.isError = false;
-                state.email = payload.email;
-                state.name = payload.name;
+                state.email = payload?.email;
+                state.name = payload?.name;
                 state.error = '';
             })
             .addCase(loginUser.rejected, (state, action) => {

@@ -7,8 +7,8 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
     const { data: allUsers } = useGetUsersQuery();
     const { register, handleSubmit, reset } = useForm();
     const [addTask, { data, error }] = useAddTaskMutation();
-    console.log('data', data);
-    console.log('error', error);
+    console.log('addTaskData', data);
+    console.log('addTaskError', error);
 
     const onSubmit = (data) => {
         addTask({ ...data, status: "pending" });
