@@ -25,18 +25,19 @@ export const createUser = createAsyncThunk("usersSlice/createUser", async ({ ema
 
 // LoginUser Thunk:---
 export const loginUser = createAsyncThunk("usersSlice/loginUser", async ({ email, password }) => {
-    const data = await signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            // ...
-            console.log('userLogin-line32', user);
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log('errorCode', errorCode);
-            console.log('errorMessage', errorMessage);
-        });
+    const data = await signInWithEmailAndPassword(auth, email, password);
+    //     .then((userCredential) => {
+    //         const user = userCredential.user;
+    //         // ...
+    //         console.log('userLogin-line32', user);
+    //     })
+    //     .catch((error) => {
+    //         const errorCode = error.code;
+    //         const errorMessage = error.message;
+    //         console.log('errorCode', errorCode);
+    //         console.log('errorMessage', errorMessage);
+    //     });
+    // console.log('data userSlice - 40', data)
 
     return {
         email: data.user.email,
