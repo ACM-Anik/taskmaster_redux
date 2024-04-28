@@ -11,7 +11,6 @@ import { setUser } from '../redux/features/users/usersSlice';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  // const [, setUser] = useState();
   // const [newChangedName, setNewChangedName] = useState("");
   // const [newChangedPhoto, setNewChangedPhoto] = useState("");
   const [newName, setNewName] = useState("");
@@ -21,7 +20,6 @@ const Profile = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // setUser(user);
         setNewName(user.displayName);
         setNewPhoto(user.photoURL);
         setEmail(user.email);
@@ -138,10 +136,10 @@ const Profile = () => {
   const handleSaveClick = () => {
     setEditing(false);
 
-    // setNewName(newChangedName);
-    // updateProfile(auth.currentUser, {
-    //   displayName: newName,
-    // });
+    setNewName(newChangedName);
+    updateProfile(auth.currentUser, {
+      displayName: newName,
+    });
 
     dispatch(
       setUser({
