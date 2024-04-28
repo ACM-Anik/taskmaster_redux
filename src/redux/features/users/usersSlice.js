@@ -29,8 +29,8 @@ export const loginUser = createAsyncThunk("usersSlice/loginUser", async ({ email
     const data = await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
         const user = userCredential.user;
-        console.log('userLogin-line32', user);
-        return {
+        console.log('userLogin-line32=>', user);
+        return { //returning the data to again return the data to the thunk.
             email: user.email,
             name: user.displayName,
         };
@@ -48,7 +48,6 @@ export const loginUser = createAsyncThunk("usersSlice/loginUser", async ({ email
         });
     });
 
-    console.log('data - UserSlice43', data);
     return {
         email: data.email,
         name: data.displayName,

@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import loginImage from '../assets/image/login.svg';
 import { loginUser, signInWithGoogle } from '../redux/features/users/usersSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const { isLoading, isError, error, email } = useSelector((state) => state.usersSlice);
   const dispatch = useDispatch();
 
@@ -39,6 +40,11 @@ const Login = () => {
     }
   }, [isLoading, email, navigate]);
 
+  // Toggle password visibility:-
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
 
   return (
     <div className="flex max-w-7xl h-screen items-center mx-auto">
@@ -60,12 +66,29 @@ const Login = () => {
             </div>
             <div className="flex flex-col items-start">
               <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                className="w-full rounded-md"
-                {...register('password')}
-              />
+              <div className="relative w-full">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  className="w-full rounded-md"
+                  {...register('password')}
+                />
+                {/* Password showing button */}
+                <button
+                  type="button" //to prevent form submission
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-blue-600 hover:text-blue-800"
+                  onClick={() => togglePasswordVisibility()}
+                >
+                  {showPassword ? (
+                    "Hide"
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                  )}
+                </button>
+              </div>
             </div>
             <div className="relative !mt-8">
               <button type="submit" className="btn btn-primary w-full">
