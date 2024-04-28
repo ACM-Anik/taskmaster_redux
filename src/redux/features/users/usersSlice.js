@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import auth from "../../../utils/firebase.config";
-// import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const initialState = {
     name: "",
@@ -26,25 +26,32 @@ export const createUser = createAsyncThunk("usersSlice/createUser", async ({ ema
 
 // LoginUser Thunk:---
 export const loginUser = createAsyncThunk("usersSlice/loginUser", async ({ email, password }) => {
-    const data = await signInWithEmailAndPassword(auth, email, password);
-    // .then((userCredential) => {
-    //     const user = userCredential.user;
-    //     console.log('userLogin-line32', user);
-    // })
-    // .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     console.log('errorCode', errorCode);
-    //     console.log('errorMessage', errorMessage);
-    // });
-    
-    // toast.error();
+    const data = await signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('userLogin-line32', user);
+        return {
+            email: user.email,
+            name: user.displayName,
+        };
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('errorCode', errorCode);
+        console.log('errorMessage', errorMessage);
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `Something went wrong! ${error.message}`,
+            footer: '<a href="#">Why do I have this issue?</a>'
+        });
+    });
 
     console.log('data - UserSlice43', data);
     return {
-        email: data.user.email,
-        name: data.user.displayName,
-        error: "",
+        email: data.email,
+        name: data.displayName,
     };
 });
 
