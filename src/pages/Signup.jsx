@@ -3,7 +3,7 @@ import loginImage from '../assets/image/login.svg';
 import { useForm, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUser } from '../redux/features/users/usersSlice';
+import { createUser, signInWithGoogle } from '../redux/features/users/usersSlice';
 import { toast, Toaster } from 'react-hot-toast';
 
 
@@ -53,7 +53,7 @@ const Signup = () => {
   };
 
   const handleGoogleLogin = () => {
-    // Google Login
+    dispatch(signInWithGoogle());
   };
 
   return (

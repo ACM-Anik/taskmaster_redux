@@ -8,10 +8,10 @@ const usersApi = baseApi.injectEndpoints({
         }),
 
         addUser: builder.mutation({
-            query: (task) => ({
+            query: (user) => ({
                 url: "/users",
                 method: "POST",
-                body: task,
+                body: user,
             }),
             invalidatesTags: ["Tasks"], //To refresh
         }),

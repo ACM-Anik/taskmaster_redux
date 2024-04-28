@@ -26,7 +26,7 @@ export const createUser = createAsyncThunk("usersSlice/createUser", async ({ ema
 
 // LoginUser Thunk:---
 export const loginUser = createAsyncThunk("usersSlice/loginUser", async ({ email, password }) => {
-    const data = await signInWithEmailAndPassword(auth, email, password)
+    const data = await signInWithEmailAndPassword(auth, email, password);
     // .then((userCredential) => {
     //     const user = userCredential.user;
     //     console.log('userLogin-line32', user);
@@ -36,14 +36,15 @@ export const loginUser = createAsyncThunk("usersSlice/loginUser", async ({ email
     //     const errorMessage = error.message;
     //     console.log('errorCode', errorCode);
     //     console.log('errorMessage', errorMessage);
-        
-        
     // });
+    
     // toast.error();
+
     console.log('data - UserSlice43', data);
     return {
         email: data.user.email,
         name: data.user.displayName,
+        error: "",
     };
 });
 

@@ -9,7 +9,7 @@ const initialState = {
             description:
                 'We need a remove button in our task card. Make the button red and use Heroicon for trash bin icon.',
             date: '2023-08-28',
-            assignedTo: "ACM Anik",
+            assignedTo: "Anik Mojumder",
             priority: 'high',
         },
     ],
@@ -22,8 +22,7 @@ const tasksSlice = createSlice({
         addTask: (state, { payload }) => {
             if (state.tasks.length === 0) {
                 state.tasks.push({ id: 1, status: "pending", ...payload });
-            }
-            else { //.at(-1): This attempts to retrieve the element at the last index of the tasks array. The negative index -1 indicates counting from the end of the array. However, there's an important point to note: the .at() method does not modify the original array; it returns the element at the specified index without changing the array itself.
+            } else { //.at(-1): This attempts to retrieve the element at the last index of the tasks array. The negative index -1 indicates counting from the end of the array. However, there's an important point to note: the .at() method does not modify the original array; it returns the element at the specified index without changing the array itself.
                 const lastElement = state.tasks.at(-1);
                 state.tasks.push({
                     id: lastElement.id + 1,
