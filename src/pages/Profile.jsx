@@ -119,7 +119,7 @@ const Profile = () => {
     setEditing(true);
   };
 
-  
+
   const handleSetClick = () => {
     console.log('newName-126', newName);
     // updateProfile(auth.currentUser, {
@@ -132,15 +132,10 @@ const Profile = () => {
     //   })
     // );
   };
-  
+
   const handleSaveClick = () => {
     setEditing(false);
-
-    setNewName(newChangedName);
-    updateProfile(auth.currentUser, {
-      displayName: newName,
-    });
-
+    // setNewName(newChangedName);
     dispatch(
       setUser({
         name: newName,
@@ -195,7 +190,15 @@ const Profile = () => {
               </div>
             ) : (
               <div>
-                <p className="mb-2"><strong>User Photo:</strong><img className="w-44 bg-white rounded shadow" src={newPhoto} alt="user photo" /> </p>
+                <div className="mb-2">
+                  <strong>User Photo: </strong>
+                  {newPhoto ?
+                    <img className="w-44 bg-white rounded shadow" src={newPhoto} alt="user photo" />
+                    :
+                    <p className="w-44 h-44 bg-white rounded shadow flex justify-center items-center">No Photo</p> 
+                  }
+                </div>
+
                 <p className="mb-2"><strong>User Name:</strong> {newName}</p>
                 <p className="mb-2"><strong>User Email:</strong> {email}</p>
                 <div className="flex justify-between">
