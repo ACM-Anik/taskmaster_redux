@@ -17,9 +17,13 @@ const MyTasks = () => {
   const { tasks, userSpecificTasks } = useSelector((state) => state.tasksSlice);
   const dispatch = useDispatch();
 
-  const [updateTask, { data: updateData, error: updateError }] = useUpdateTaskMutation();  
-  console.log('updateData', updateData);
-  console.log('updateError', updateError);
+  const [updateTask, { data: updateData, error: updateError }] = useUpdateTaskMutation();
+    if (updateData) {
+      console.log('updateData', updateData);
+    }
+    if (updateError) {
+      console.log('updateError', updateError);
+    }
 
   useEffect(() => {
     dispatch(userTasks({userName, dBTasks}));

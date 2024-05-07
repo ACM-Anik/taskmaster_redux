@@ -2,17 +2,21 @@ import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
 import { useAddTaskMutation } from "../../redux/features/tasks/taskApi";
 import { useGetUsersQuery } from "../../redux/features/users/usersApi";
+import { useEffect } from "react";
 
 const AddTaskModal = ({ isOpen, setIsOpen }) => {
     const { data: allUsers } = useGetUsersQuery();
     const { register, handleSubmit, reset } = useForm();
-    const [addTask, { addTaskSuccess, addTaskError }] = useAddTaskMutation();
-    if (addTaskSuccess !== undefined) {
-        console.log('addTaskSuccess', addTaskSuccess);
-    }
-    if (addTaskError) {
-        console.log('addTaskError', addTaskError);
-    }
+    const [addTask, { data: addTaskSuccess, error: addTaskError }] = useAddTaskMutation();
+    useEffect(() => {
+        if (addTaskSuccess) {
+            console.log('addTaskSuccess', addTaskSuccess);
+        }
+        if (addTaskError) {
+            console.log('addTaskError', addTaskError);
+        }
+    }, [addTaskSuccess, addTaskError]);
+    
 
     const onSubmit = (data) => {
         addTask({ ...data, status: "pending" });

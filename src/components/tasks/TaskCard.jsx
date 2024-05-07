@@ -1,10 +1,10 @@
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useRemoveTaskMutation, useUpdateTaskMutation } from '../../redux/features/tasks/taskApi';
+// import { useEffect } from 'react';
 
 
 const TaskCard = ({ task }) => {
   const [updateTask, { data: updateData, error: updateError }] = useUpdateTaskMutation();
-  console.log('updateError', updateError);
   if (updateData) {
     console.log('updateData', updateData);
   }
@@ -13,8 +13,12 @@ const TaskCard = ({ task }) => {
   }
 
   const [removeTaskMutation, { data: removeData, error: removeError }] = useRemoveTaskMutation();
-  console.log('removeData', removeData);
-  console.log('removeError', removeError);
+  if (removeData) {
+    console.log('removeData', removeData);
+  }
+  if (removeError) {
+    console.log('removeError', removeError);
+  }
 
   const handleUpdate = (id, updatedStatus) => {
     const data = {
