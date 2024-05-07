@@ -6,9 +6,13 @@ import { useGetUsersQuery } from "../../redux/features/users/usersApi";
 const AddTaskModal = ({ isOpen, setIsOpen }) => {
     const { data: allUsers } = useGetUsersQuery();
     const { register, handleSubmit, reset } = useForm();
-    const [addTask, { data, error }] = useAddTaskMutation();
-    console.log('addTaskData', data);
-    console.log('addTaskError', error);
+    const [addTask, { addTaskSuccess, addTaskError }] = useAddTaskMutation();
+    if (addTaskSuccess !== undefined) {
+        console.log('addTaskSuccess', addTaskSuccess);
+    }
+    if (addTaskError) {
+        console.log('addTaskError', addTaskError);
+    }
 
     const onSubmit = (data) => {
         addTask({ ...data, status: "pending" });
