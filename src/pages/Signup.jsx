@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createUser, signInWithGoogle } from '../redux/features/users/usersSlice';
 import { toast, Toaster } from 'react-hot-toast';
+import { useAddUserMutation } from '../redux/features/users/usersApi';
 
 
 const Signup = () => {
@@ -14,9 +15,13 @@ const Signup = () => {
   const navigate = useNavigate();
   const [disabled, setDisabled] = useState(true);
 
-  const {isLoading, isError, error, email} = useSelector((state) => state.usersSlice);
+  const { isLoading, isError, error, email } = useSelector((state) => state.usersSlice);
   const dispatch = useDispatch();
+  const [addUser, { addUserSuccess, addUserError }] = useAddUserMutation();
+  console.log('addUserSuccess', addUserSuccess);
+  console.log('addUserError', addUserError);
 
+  // Password validating:-
   useEffect(() => {
     if (
       password !== undefined &&
@@ -31,26 +36,38 @@ const Signup = () => {
     }
   }, [password, confirmPassword]);
 
+  // Error Validating:-
   useEffect(() => {
-    if(isError && error){
+    if (isError && error) {
       toast.error(error);
     }
   }, [isError, error]);
 
+  // Navigating:-
   useEffect(() => {
-    if(!isLoading && email){
+    if (!isLoading && email) {
       navigate('/');
     }
   }, [isLoading, email, navigate]);
 
+  // Handle Submit:--
   const onSubmit = ({ name, email, password }) => {
     dispatch(
       createUser({
         email,
         password,
         name,
-      }));
+      })
+    );
+    addUser({
+      name: name,
+      email: email,
+      photoURL: "",
+      role: "member",
+      chat: []
+    });
   };
+
 
   const handleGoogleLogin = () => {
     dispatch(signInWithGoogle());

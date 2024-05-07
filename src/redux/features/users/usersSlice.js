@@ -11,6 +11,8 @@ const initialState = {
     error: "",
 };
 
+
+
 // CreateUser Thunk:---
 export const createUser = createAsyncThunk("usersSlice/createUser", async ({ email, password, name }) => {
     const data = await createUserWithEmailAndPassword(auth, email, password);
