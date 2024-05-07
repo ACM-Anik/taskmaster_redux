@@ -4,8 +4,13 @@ import { useRemoveTaskMutation, useUpdateTaskMutation } from '../../redux/featur
 
 const TaskCard = ({ task }) => {
   const [updateTask, { data: updateData, error: updateError }] = useUpdateTaskMutation();
-  console.log('updateData', updateData);
   console.log('updateError', updateError);
+  if (updateData) {
+    console.log('updateData', updateData);
+  }
+  if (updateError) {
+    console.log('updateError', updateError);
+  }
 
   const [removeTaskMutation, { data: removeData, error: removeError }] = useRemoveTaskMutation();
   console.log('removeData', removeData);
