@@ -1,6 +1,5 @@
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useRemoveTaskMutation, useUpdateTaskMutation } from '../../redux/features/tasks/taskApi';
-// import { useEffect } from 'react';
 
 
 const TaskCard = ({ task }) => {

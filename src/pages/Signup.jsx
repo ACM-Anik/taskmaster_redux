@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createUser, signInWithGoogle } from '../redux/features/users/usersSlice';
 import { toast, Toaster } from 'react-hot-toast';
 import { useAddUserMutation } from '../redux/features/users/usersApi';
+import { onAuthStateChanged } from 'firebase/auth';
+import auth from '../utils/firebase.config';
 
 
 const Signup = () => {
@@ -17,9 +19,13 @@ const Signup = () => {
 
   const { isLoading, isError, error, email } = useSelector((state) => state.usersSlice);
   const dispatch = useDispatch();
-  const [addUser, { addUserSuccess, addUserError }] = useAddUserMutation();
-  console.log('addUserSuccess', addUserSuccess);
-  console.log('addUserError', addUserError);
+  const [addUser, { data: addUserSuccess, error: addUserError }] = useAddUserMutation();
+  if (addUserSuccess) {
+    console.log('addUserSuccess', addUserSuccess);
+  }
+  if (addUserError) {
+    console.log('addUserError', addUserError);
+  }
 
   // Password validating:-
   useEffect(() => {
@@ -68,10 +74,28 @@ const Signup = () => {
     });
   };
 
+  const setNewUser = () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // addUser({
+        //   name: user.displayName,
+        //   email: user.email,
+        //   photoURL: user?.photoURL,
+        //   role: "member",
+        //   chat: []
+        // });
+        console.log('user', user);
+      }
+    });
+  };
 
   const handleGoogleLogin = () => {
     dispatch(signInWithGoogle());
+    setTimeout(() => {
+      setNewUser();
+    }, 1000);
   };
+
 
   return (
     <div className="flex max-w-7xl mx-auto h-screen items-center">

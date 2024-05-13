@@ -16,8 +16,12 @@ const Settings = () => {
   const [modalUser, setModalUser] = useState();
   const { data: allUsers } = useGetUsersQuery();
   const [deleteUser, { data: deleteData, error: deleteError }] = useRemoveUserMutation();
-  console.log('deleteData', deleteData);
-  console.log('deleteError', deleteError);
+  if (deleteData) {
+    console.log('deleteData', deleteData);
+  }
+  if (deleteError) {
+    console.log('deleteError', deleteError);
+  }
 
 
   // Setting the user Profile:-
@@ -90,7 +94,7 @@ const Settings = () => {
         <UpdateUserModal isOpen={isOpen} setIsOpen={setIsOpen} id={userId} modalUser={modalUser}></UpdateUserModal>
         <div className="col-span-9 px-10 pt-10">
           {/* NavBars-------------------- */}
-            <Navbar title="Settings"></Navbar>
+          <Navbar title="Settings"></Navbar>
           {/* Settings main interface (Second colspan)-------------*/}
           <div className="grid grid-cols-1 gap-5 mt-10">
             <div className="relative h-screen overflow-y-auto">
