@@ -77,13 +77,13 @@ const Signup = () => {
   const setNewUser = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // addUser({
-        //   name: user.displayName,
-        //   email: user.email,
-        //   photoURL: user?.photoURL,
-        //   role: "member",
-        //   chat: []
-        // });
+        addUser({
+          name: user.displayName,
+          email: user.email,
+          photoURL: user?.photoURL,
+          role: "member",
+          chat: []
+        });
         console.log('user', user);
       }
     });

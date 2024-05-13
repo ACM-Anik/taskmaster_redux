@@ -5,7 +5,7 @@ import { loginUser, signInWithGoogle } from '../redux/features/users/usersSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-// import { useAddUserMutation } from '../redux/features/users/usersApi';
+import { useAddUserMutation } from '../redux/features/users/usersApi';
 import { onAuthStateChanged } from 'firebase/auth';
 import auth from '../utils/firebase.config';
 
@@ -16,13 +16,13 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { isLoading, isError, error, email } = useSelector((state) => state.usersSlice);
   const dispatch = useDispatch();
-  // const [addUser, { data: addUserSuccess, error: addUserError }] = useAddUserMutation();
-  // if(addUserSuccess){
-  //   console.log('addUserSuccess', addUserSuccess);
-  // }
-  // if(addUserError){
-  //   console.log('addUserError', addUserError);
-  // }
+  const [addUser, { data: addUserSuccess, error: addUserError }] = useAddUserMutation();
+  if(addUserSuccess){
+    console.log('addUserSuccess', addUserSuccess);
+  }
+  if(addUserError){
+    console.log('addUserError', addUserError);
+  }
 
   // SignIn:-
   const onSubmit = ({ email, password }) => {
@@ -35,13 +35,13 @@ const Login = () => {
   const setNewUser = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // addUser({
-        //   name: user.displayName,
-        //   email: user.email,
-        //   photoURL: user?.photoURL,
-        //   role: "member",
-        //   chat: []
-        // });
+        addUser({
+          name: user.displayName,
+          email: user.email,
+          photoURL: user?.photoURL,
+          role: "member",
+          chat: []
+        });
       }
     });
   };
