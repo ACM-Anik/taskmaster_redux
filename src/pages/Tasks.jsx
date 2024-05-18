@@ -41,8 +41,9 @@ const Tasks = () => {
         setIsOpen={setIsOpen}
       ></AddTaskModal>
 
-      <div className="h-screen grid grid-cols-12">
+      <div className="h-screen grid grid-cols-12 overflow-hidden">
         <div className="col-span-9 px-10 pt-10">
+          {/* Navbar:----------- */}
           <div className="flex justify-between items-center">
             <div>
               <h1 className="font-semibold text-3xl">Tasks</h1>
@@ -60,10 +61,10 @@ const Tasks = () => {
 
               <MenuDropdown>
                 <div className="h-10 w-10 rounded-xl overflow-hidden">
-                  <img 
+                  <img
                     title={user?.displayName}
-                    src={ user?.photoURL ? 
-                      user.photoURL 
+                    src={user?.photoURL ?
+                      user.photoURL
                       :
                       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                     }
@@ -75,9 +76,11 @@ const Tasks = () => {
 
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-5 mt-10">
-            <div className="relative h-[800px] overflow-auto">
-              <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
+          {/* Task-cards in different status:--------- */}
+          <div className="grid grid-cols-3 gap-5 pt-10">
+            {/* Up Next */}
+            <div className="relative h-calc-100vh-20vh 2xl:h-calc-100vh-15vh overflow-y-auto overflow-x-hidden pb-8 2xl:pb-0">
+              <div className="flex justify-between sticky top-0 bg-[#D3DDF9] p-5 rounded-md mb-3">
                 <h1>Up Next</h1>
                 <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
                   {pendingTasks?.length}
@@ -89,21 +92,23 @@ const Tasks = () => {
                 ))}
               </div>
             </div>
-            <div className="relative h-[800px] overflow-auto">
-              <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
-                <h1>In Progress</h1>
-                <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                  {runningTasks?.length}
-                </p>
+            {/* In Progress */}
+              <div className="relative h-calc-100vh-20vh 2xl:h-calc-100vh-15vh overflow-y-auto overflow-x-hidden pb-8 2xl:pb-0">
+                <div className="flex justify-between sticky top-0 bg-[#D3DDF9] p-5 rounded-md mb-3">
+                  <h1>In Progress</h1>
+                  <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
+                    {runningTasks?.length}
+                  </p>
+                </div>
+                <div className="space-y-3">
+                  {runningTasks?.map((item) => (
+                    <TaskCard key={item._id} task={item} />
+                  ))}
+                </div>
               </div>
-              <div className="space-y-3">
-                {runningTasks?.map((item) => (
-                  <TaskCard key={item._id} task={item} />
-                ))}
-              </div>
-            </div>
-            <div className="relative h-[800px] overflow-auto">
-              <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
+            {/* Done */}
+            <div className="relative h-calc-100vh-20vh 2xl:h-calc-100vh-15vh overflow-y-auto overflow-x-hidden pb-8 2xl:pb-0">
+              <div className="flex justify-between sticky top-0 bg-[#D3DDF9] p-5 rounded-md mb-3">
                 <h1>Done</h1>
                 <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
                   {doneTasks?.length}
@@ -163,6 +168,7 @@ const Tasks = () => {
       </div>
     </>
   );
+
 };
 
 export default Tasks;

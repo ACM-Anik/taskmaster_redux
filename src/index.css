@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .btn {
   @apply rounded-xl h-10 px-4 grid place-content-center font-semibold  transition-all;
 }
@@ -12,4 +13,11 @@
 
 .btn-danger {
   @apply bg-red-500 text-white hover:bg-red-700;
+}
+
+.h-calc-100vh-15vh {
+  @apply h-[calc(100vh-15vh)];
+}
+.h-calc-100vh-20vh {
+  @apply h-[calc(100vh-20vh)];
 }
