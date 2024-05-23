@@ -152,17 +152,18 @@ const Settings = () => {
         <div className="col-span-3 border-l-2 border-secondary/20 px-10 pt-10 overflow-hidden">
           <div>
             <h1 className="text-xl">Shortcut Tools</h1>
+            {/* Photos of users/members */}
             <div className="flex flex-wrap items-center gap-3 mt-3 overflow-y-auto overflow-x-hidden">
               {allUsers?.map((member) =>
                 <div
                   key={member._id}
-                  className="h-10 w-10 m-2 rounded-xl overflow-hidden hover:scale-105 hover:transition-all"
                   title={member?.name}
+                  className="h-10 w-10 m-2 rounded-xl relative"
                 >
                   <img
                     src={member.photoURL}
                     alt="member"
-                    className="object-cover h-full w-full"
+                    className="object-cover h-full w-full hover:scale-150 hover:transition-transform rounded-xl hover:rounded hover:absolute hover:top-0 hover:left-0"
                   />
                 </div>
               )}

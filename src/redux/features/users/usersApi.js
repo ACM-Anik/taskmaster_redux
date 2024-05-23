@@ -4,7 +4,7 @@ const usersApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getUsers: builder.query({
             query: () => '/users',
-            providesTags: ["Tasks"], //To refresh 
+            providesTags: ["Users"], //To refresh 
         }),
 
         addUser: builder.mutation({
